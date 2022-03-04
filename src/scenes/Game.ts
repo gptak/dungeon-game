@@ -46,6 +46,10 @@ export default class Game extends Phaser.Scene {
 
     const orcWarriors = this.physics.add.group({
       classType: OrcWarrior,
+      createCallback : (object)=>{
+        const orcObject = object as OrcWarrior
+        orcObject.body.onCollide = true
+      }
     });
 
     orcWarriors.get(256, 128, "orc_warrior");
@@ -60,6 +64,10 @@ export default class Game extends Phaser.Scene {
 
     this.physics.add.collider(this.hero, wallsLayer);
     this.physics.add.collider(this.hero, wallsLayerFront);
+    
+    this.physics.add.collider(orcWarriors, wallsLayer);
+    this.physics.add.collider(orcWarriors, wallsLayerFront);
+    this.physics.add.collider(orcWarriors, this.hero);
 
     //camera
 
@@ -93,5 +101,7 @@ export default class Game extends Phaser.Scene {
       this.hero.anims.play("hero-idle", true);
       this.hero.setVelocity(0, 0);
     }
+
+    
   }
 }
