@@ -1,18 +1,19 @@
-import Phaser from 'phaser'
+import Phaser from "phaser";
 
-import HelloWorldScene from './scenes/HelloWorldScene'
+import TitleScreen from "./scenes/TitleScreen";
+import Preloader from "./scenes/Preloader";
+import Game from "./scenes/Game";
 
-const config: Phaser.Types.Core.GameConfig = {
-	type: Phaser.AUTO,
-	width: 800,
-	height: 600,
-	physics: {
-		default: 'arcade',
-		arcade: {
-			gravity: { y: 0 }
-		}
-	},
-	scene: [HelloWorldScene]
-}
-
-export default new Phaser.Game(config)
+export default new Phaser.Game({
+  type: Phaser.AUTO,
+  width: 400,
+  height: 300,
+  physics: {
+    default: "arcade",
+    arcade: {
+      gravity: { y: 0 },
+    },
+  },
+  scene: [Preloader, Game],
+  scale: { zoom: 2 },
+});
