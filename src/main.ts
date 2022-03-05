@@ -1,8 +1,9 @@
 import Phaser from "phaser";
 
-import TitleScreen from "./scenes/TitleScreen";
 import Preloader from "./scenes/Preloader";
+import TitleScreen from "./scenes/TitleScreen";
 import Game from "./scenes/Game";
+import UI from "./scenes/UI";
 
 export default new Phaser.Game({
   type: Phaser.AUTO,
@@ -12,9 +13,9 @@ export default new Phaser.Game({
     default: "arcade",
     arcade: {
       gravity: { y: 0 },
-      debug: true,
+      // debug: true,
     },
   },
-  scene: [Preloader, Game],
+  scene: [Preloader, Game, UI],
   scale: { zoom: 2 },
 });

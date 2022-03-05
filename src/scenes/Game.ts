@@ -3,7 +3,6 @@ import Phaser from "phaser";
 import { createOrcWarriorAnims } from "~/anims/EnemyAnims";
 import { createHeroAnims } from "~/anims/HeroAnims";
 import OrcWarrior from "~/enemies/OrcWarrior";
-
 import "~/characters/Hero";
 import Hero from "~/characters/Hero";
 
@@ -18,6 +17,7 @@ export default class Game extends Phaser.Scene {
     this.cursors = this.input.keyboard.createCursorKeys();
   }
   create() {
+    this.scene.run("ui")
     //background
     const map = this.make.tilemap({ key: "map" });
     const tileset = map.addTilesetImage("tiles", "tiles_map");
@@ -48,6 +48,9 @@ export default class Game extends Phaser.Scene {
 
     const wallsLayerFront = map.createLayer("WallsFront", tileset, 0, 0);
     wallsLayerFront.setCollisionByProperty({ collide: true });
+
+    //UI
+
 
     //collisions
 

@@ -14,6 +14,9 @@ export default class Preloader extends Phaser.Scene {
       "assets/orc_warrior.png",
       "assets/orc_warrior.json"
     );
+
+    this.load.image("ui_heart_empty", "assets/ui_heart_empty.png");
+    this.load.image("ui_heart_full", "assets/ui_heart_full.png");
   }
   create() {
     this.scene.start("game");
