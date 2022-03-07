@@ -17,6 +17,7 @@ export default class Preloader extends Phaser.Scene {
 
     this.load.image("ui_heart_empty", "assets/ui_heart_empty.png");
     this.load.image("ui_heart_full", "assets/ui_heart_full.png");
+    this.load.image("sword", "assets/weapon_rusty_sword.png");
   }
   create() {
     this.scene.start("game");

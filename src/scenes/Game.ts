@@ -4,11 +4,17 @@ import { createOrcWarriorAnims } from "~/anims/EnemyAnims";
 import { createHeroAnims } from "~/anims/HeroAnims";
 import OrcWarrior from "~/enemies/OrcWarrior";
 import "~/characters/Hero";
+import { sceneEvents } from "~/events/EventsCenter";
 import Hero from "~/characters/Hero";
+import Sword from "~/weapons/sword";
+import "~/weapons/sword";
 
 export default class Game extends Phaser.Scene {
   private cursors!: Phaser.Types.Input.Keyboard.CursorKeys;
   private hero!: Hero;
+  private sword!: Sword;
+
+  private playerEnemyCollider?: Phaser.Physics.Arcade.Collider;
 
   constructor() {
     super("game");
@@ -17,7 +23,6 @@ export default class Game extends Phaser.Scene {
     this.cursors = this.input.keyboard.createCursorKeys();
   }
   create() {
-    this.scene.run("ui")
     //background
     const map = this.make.tilemap({ key: "map" });
     const tileset = map.addTilesetImage("tiles", "tiles_map");
@@ -25,11 +30,6 @@ export default class Game extends Phaser.Scene {
     map.createLayer("Floor", tileset, 0, 0);
     const wallsLayer = map.createLayer("Walls", tileset, 0, 0);
     wallsLayer.setCollisionByProperty({ collide: true });
-
-    //hero character
-    this.hero = this.add.hero(128, 128, "hero");
-
-    createHeroAnims(this.anims);
 
     //enemies
     createOrcWarriorAnims(this.anims);
@@ -44,6 +44,15 @@ export default class Game extends Phaser.Scene {
 
     orcWarriors.get(256, 128, "orc_warrior");
 
+    //hero character
+    this.hero = this.add.hero(128, 128, "hero");
+
+    createHeroAnims(this.anims);
+
+    //weapon
+    this.sword = this.add.sword(500, 128, "sword");
+    
+
     //front walls
 
     const wallsLayerFront = map.createLayer("WallsFront", tileset, 0, 0);
@@ -51,6 +60,7 @@ export default class Game extends Phaser.Scene {
 
     //UI
 
+    this.scene.run("ui");
 
     //collisions
 
@@ -60,7 +70,7 @@ export default class Game extends Phaser.Scene {
     this.physics.add.collider(orcWarriors, wallsLayer);
     this.physics.add.collider(orcWarriors, wallsLayerFront);
 
-    this.physics.add.collider(
+    this.playerEnemyCollider = this.physics.add.collider(
       orcWarriors,
       this.hero,
       this.handlePlayerEnemyCollision,
@@ -84,13 +94,27 @@ export default class Game extends Phaser.Scene {
     const dir = new Phaser.Math.Vector2(dx, dy).normalize().scale(200);
 
     this.hero.handleDamage(dir);
+
+    sceneEvents.emit("player-damage", this.hero.health);
+
+    if (this.hero.health <= 0) {
+      this.playerEnemyCollider?.destroy();
+    }
   };
 
   update(time: number, delta: number): void {
     const speed = 150;
 
+    this.sword.x = this.hero.x+10;
+    this.sword.y = this.hero.y
+    
+
     if (this.hero) {
       this.hero.update(this.cursors);
+    }
+
+    if(this.sword){
+      this.sword.update(this.cursors)
     }
   }
 }

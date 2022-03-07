@@ -16,11 +16,18 @@ declare global {
 enum HealthState {
   IDLE,
   DAMAGE,
+  DEAD,
 }
 
 export default class Hero extends Phaser.Physics.Arcade.Sprite {
-  private healthState = HealthState.IDLE;
-  private damageTime = 0;
+  private _healthState = HealthState.IDLE;
+  private _damageTime = 0;
+
+  private _health = 5;
+
+  get health() {
+    return this._health;
+  }
 
   constructor(
     scene: Phaser.Scene,
@@ -34,34 +41,50 @@ export default class Hero extends Phaser.Physics.Arcade.Sprite {
   }
 
   handleDamage(dir: Phaser.Math.Vector2) {
-    if (this.healthState === HealthState.DAMAGE) {
+    if (this._health <= 0) {
       return;
     }
-    this.setVelocity(dir.x, dir.y);
-    this.setTint(0xff0000);
-    this.healthState = HealthState.DAMAGE;
-    this.damageTime = 0;
+    if (this._healthState === HealthState.DAMAGE) {
+      return;
+    }
+
+    --this._health;
+
+    if (this._health <= 0) {
+      this._healthState = HealthState.DEAD;
+      this.anims.play("hero-idle");
+      this.setVelocity(0,0)
+
+    } else {
+      this.setVelocity(dir.x, dir.y);
+      this.setTint(0xff0000);
+      this._healthState = HealthState.DAMAGE;
+      this._damageTime = 0;
+    }
   }
 
   preUpdate(time: number, delta: number) {
     super.preUpdate(time, delta);
 
-    switch (this.healthState) {
+    switch (this._healthState) {
       case HealthState.IDLE:
         break;
       case HealthState.DAMAGE:
-        this.damageTime += delta;
-        if (this.damageTime >= 250) {
-          this.healthState = HealthState.IDLE;
+        this._damageTime += delta;
+        if (this._damageTime >= 250) {
+          this._healthState = HealthState.IDLE;
           this.setTint(0xffffff);
-          this.damageTime = 0;
+          this._damageTime = 0;
         }
         break;
     }
   }
 
   update(cursors: Phaser.Types.Input.Keyboard.CursorKeys) {
-    if (this.healthState === HealthState.DAMAGE) {
+    if (
+      this._healthState === HealthState.DAMAGE ||
+      this._healthState === HealthState.DEAD
+    ) {
       return;
     }
 
