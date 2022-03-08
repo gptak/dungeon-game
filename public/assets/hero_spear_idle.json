@@ -1,0 +1,76 @@
+{"frames": [
+
+{
+	"filename": "Viking_IdleSpear_01.png",
+	"frame": {"x":1,"y":48,"w":31,"h":20},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":10,"y":30,"w":31,"h":20},
+	"sourceSize": {"w":64,"h":64}
+},
+{
+	"filename": "Viking_IdleSpear_02.png",
+	"frame": {"x":1,"y":48,"w":31,"h":20},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":10,"y":30,"w":31,"h":20},
+	"sourceSize": {"w":64,"h":64}
+},
+{
+	"filename": "Viking_IdleSpear_03.png",
+	"frame": {"x":1,"y":25,"w":31,"h":21},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":10,"y":29,"w":31,"h":21},
+	"sourceSize": {"w":64,"h":64}
+},
+{
+	"filename": "Viking_IdleSpear_04.png",
+	"frame": {"x":1,"y":1,"w":31,"h":22},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":10,"y":28,"w":31,"h":22},
+	"sourceSize": {"w":64,"h":64}
+},
+{
+	"filename": "Viking_IdleSpear_05.png",
+	"frame": {"x":1,"y":91,"w":31,"h":18},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":10,"y":32,"w":31,"h":18},
+	"sourceSize": {"w":64,"h":64}
+},
+{
+	"filename": "Viking_IdleSpear_06.png",
+	"frame": {"x":1,"y":70,"w":31,"h":19},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":10,"y":31,"w":31,"h":19},
+	"sourceSize": {"w":64,"h":64}
+},
+{
+	"filename": "Viking_IdleSpear_07.png",
+	"frame": {"x":1,"y":48,"w":31,"h":20},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":10,"y":30,"w":31,"h":20},
+	"sourceSize": {"w":64,"h":64}
+},
+{
+	"filename": "Viking_IdleSpear_08.png",
+	"frame": {"x":1,"y":48,"w":31,"h":20},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":10,"y":30,"w":31,"h":20},
+	"sourceSize": {"w":64,"h":64}
+}],
+"meta": {
+	"app": "https://www.codeandweb.com/texturepacker",
+	"version": "1.0",
+	"image": "hero_spear_idle.png",
+	"format": "RGBA8888",
+	"size": {"w":33,"h":110},
+	"scale": "1",
+	"smartupdate": "$TexturePacker:SmartUpdate:1232727e464e4a7ca4206646433c2d85:c35aa269bbcd495af299206b0f2ce213:6cf890e46e76d8524b72141c6ee62859$"
+}
+}

@@ -1,0 +1,236 @@
+{"frames": [
+
+{
+	"filename": "Viking_AttackSpear_01.png",
+	"frame": {"x":106,"y":1,"w":31,"h":20},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":10,"y":30,"w":31,"h":20},
+	"sourceSize": {"w":64,"h":64}
+},
+{
+	"filename": "Viking_AttackSpear_02.png",
+	"frame": {"x":106,"y":1,"w":31,"h":20},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":10,"y":30,"w":31,"h":20},
+	"sourceSize": {"w":64,"h":64}
+},
+{
+	"filename": "Viking_AttackSpear_03.png",
+	"frame": {"x":106,"y":1,"w":31,"h":20},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":10,"y":30,"w":31,"h":20},
+	"sourceSize": {"w":64,"h":64}
+},
+{
+	"filename": "Viking_AttackSpear_04.png",
+	"frame": {"x":106,"y":1,"w":31,"h":20},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":10,"y":30,"w":31,"h":20},
+	"sourceSize": {"w":64,"h":64}
+},
+{
+	"filename": "Viking_AttackSpear_05.png",
+	"frame": {"x":106,"y":1,"w":31,"h":20},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":10,"y":30,"w":31,"h":20},
+	"sourceSize": {"w":64,"h":64}
+},
+{
+	"filename": "Viking_AttackSpear_06.png",
+	"frame": {"x":106,"y":1,"w":31,"h":20},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":10,"y":30,"w":31,"h":20},
+	"sourceSize": {"w":64,"h":64}
+},
+{
+	"filename": "Viking_AttackSpear_07.png",
+	"frame": {"x":106,"y":1,"w":31,"h":20},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":10,"y":30,"w":31,"h":20},
+	"sourceSize": {"w":64,"h":64}
+},
+{
+	"filename": "Viking_AttackSpear_08.png",
+	"frame": {"x":1,"y":1,"w":31,"h":21},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":10,"y":29,"w":31,"h":21},
+	"sourceSize": {"w":64,"h":64}
+},
+{
+	"filename": "Viking_AttackSpear_09.png",
+	"frame": {"x":106,"y":1,"w":31,"h":20},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":10,"y":30,"w":31,"h":20},
+	"sourceSize": {"w":64,"h":64}
+},
+{
+	"filename": "Viking_AttackSpear_10.png",
+	"frame": {"x":139,"y":1,"w":31,"h":20},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":9,"y":30,"w":31,"h":20},
+	"sourceSize": {"w":64,"h":64}
+},
+{
+	"filename": "Viking_AttackSpear_11.png",
+	"frame": {"x":172,"y":1,"w":31,"h":20},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":8,"y":30,"w":31,"h":20},
+	"sourceSize": {"w":64,"h":64}
+},
+{
+	"filename": "Viking_AttackSpear_12.png",
+	"frame": {"x":172,"y":1,"w":31,"h":20},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":8,"y":30,"w":31,"h":20},
+	"sourceSize": {"w":64,"h":64}
+},
+{
+	"filename": "Viking_AttackSpear_13.png",
+	"frame": {"x":172,"y":1,"w":31,"h":20},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":8,"y":30,"w":31,"h":20},
+	"sourceSize": {"w":64,"h":64}
+},
+{
+	"filename": "Viking_AttackSpear_14.png",
+	"frame": {"x":238,"y":1,"w":37,"h":18},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":15,"y":32,"w":37,"h":18},
+	"sourceSize": {"w":64,"h":64}
+},
+{
+	"filename": "Viking_AttackSpear_15.png",
+	"frame": {"x":312,"y":1,"w":35,"h":17},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":16,"y":33,"w":35,"h":17},
+	"sourceSize": {"w":64,"h":64}
+},
+{
+	"filename": "Viking_AttackSpear_16.png",
+	"frame": {"x":277,"y":1,"w":33,"h":18},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":17,"y":32,"w":33,"h":18},
+	"sourceSize": {"w":64,"h":64}
+},
+{
+	"filename": "Viking_AttackSpear_17.png",
+	"frame": {"x":71,"y":1,"w":33,"h":20},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":14,"y":30,"w":33,"h":20},
+	"sourceSize": {"w":64,"h":64}
+},
+{
+	"filename": "Viking_AttackSpear_18.png",
+	"frame": {"x":34,"y":1,"w":35,"h":20},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":12,"y":30,"w":35,"h":20},
+	"sourceSize": {"w":64,"h":64}
+},
+{
+	"filename": "Viking_AttackSpear_19.png",
+	"frame": {"x":205,"y":1,"w":31,"h":20},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":9,"y":30,"w":31,"h":20},
+	"sourceSize": {"w":64,"h":64}
+},
+{
+	"filename": "Viking_AttackSpear_20.png",
+	"frame": {"x":106,"y":1,"w":31,"h":20},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":10,"y":30,"w":31,"h":20},
+	"sourceSize": {"w":64,"h":64}
+},
+{
+	"filename": "Viking_AttackSpear_21.png",
+	"frame": {"x":106,"y":1,"w":31,"h":20},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":10,"y":30,"w":31,"h":20},
+	"sourceSize": {"w":64,"h":64}
+},
+{
+	"filename": "Viking_AttackSpear_22.png",
+	"frame": {"x":106,"y":1,"w":31,"h":20},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":10,"y":30,"w":31,"h":20},
+	"sourceSize": {"w":64,"h":64}
+},
+{
+	"filename": "Viking_AttackSpear_23.png",
+	"frame": {"x":106,"y":1,"w":31,"h":20},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":10,"y":30,"w":31,"h":20},
+	"sourceSize": {"w":64,"h":64}
+},
+{
+	"filename": "Viking_AttackSpear_24.png",
+	"frame": {"x":106,"y":1,"w":31,"h":20},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":10,"y":30,"w":31,"h":20},
+	"sourceSize": {"w":64,"h":64}
+},
+{
+	"filename": "Viking_AttackSpear_25.png",
+	"frame": {"x":106,"y":1,"w":31,"h":20},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":10,"y":30,"w":31,"h":20},
+	"sourceSize": {"w":64,"h":64}
+},
+{
+	"filename": "Viking_AttackSpear_26.png",
+	"frame": {"x":106,"y":1,"w":31,"h":20},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":10,"y":30,"w":31,"h":20},
+	"sourceSize": {"w":64,"h":64}
+},
+{
+	"filename": "Viking_AttackSpear_27.png",
+	"frame": {"x":106,"y":1,"w":31,"h":20},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":10,"y":30,"w":31,"h":20},
+	"sourceSize": {"w":64,"h":64}
+},
+{
+	"filename": "Viking_AttackSpear_28.png",
+	"frame": {"x":106,"y":1,"w":31,"h":20},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":10,"y":30,"w":31,"h":20},
+	"sourceSize": {"w":64,"h":64}
+}],
+"meta": {
+	"app": "https://www.codeandweb.com/texturepacker",
+	"version": "1.0",
+	"image": "hero_spear_swing.png",
+	"format": "RGBA8888",
+	"size": {"w":348,"h":23},
+	"scale": "1",
+	"smartupdate": "$TexturePacker:SmartUpdate:251505ea1a269d020838fe542fa563fa:00673abd2e86febb4843c64e9990a177:d6593d7fcb9ff8aa727d49297d52bc61$"
+}
+}

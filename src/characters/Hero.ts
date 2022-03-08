@@ -53,6 +53,7 @@ export default class Hero extends Phaser.Physics.Arcade.Sprite {
     if (this._health <= 0) {
       this._healthState = HealthState.DEAD;
       this.anims.play("hero-dead");
+
       this.setVelocity(0, 0);
     } else {
       this.setVelocity(dir.x, dir.y);
@@ -88,14 +89,12 @@ export default class Hero extends Phaser.Physics.Arcade.Sprite {
     }
 
     const speed = 100;
+    
 
     if (cursors.space.isDown) {
       this.anims.play("hero-axe-swing1", true);
       this.setVelocity(0, 0);
-      console.log("nakurwiam");
-    }
-
-    if (
+    } else if (
       (cursors.left.isDown ||
         cursors.right.isDown ||
         cursors.up.isDown ||
@@ -107,13 +106,11 @@ export default class Hero extends Phaser.Physics.Arcade.Sprite {
         this.setVelocityX(-speed);
         this.scaleX = -1;
         this.body.offset.x = 29;
-        console.log("biegne");
       } else if (cursors.right?.isDown) {
         this.anims.play("hero-run", true);
         this.setVelocityX(speed);
         this.scaleX = 1;
         this.body.offset.x = 18;
-        console.log("biegne");
       } else if (cursors.right?.isUp) {
         this.setVelocityX(0);
       } else if (cursors.left?.isUp) {
@@ -131,11 +128,7 @@ export default class Hero extends Phaser.Physics.Arcade.Sprite {
       } else if (cursors.down?.isUp) {
         this.setVelocityY(0);
       }
-    } else if (cursors.space.isUp) {
-      this.anims.play("hero-idle", true);
-      this.setVelocity(0, 0);
-      console.log("stoje");
-    }
+    } 
   }
 }
 

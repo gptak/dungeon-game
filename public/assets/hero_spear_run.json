@@ -1,0 +1,76 @@
+{"frames": [
+
+{
+	"filename": "Viking_RunSpear_01.png",
+	"frame": {"x":1,"y":1,"w":31,"h":20},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":10,"y":30,"w":31,"h":20},
+	"sourceSize": {"w":64,"h":64}
+},
+{
+	"filename": "Viking_RunSpear_02.png",
+	"frame": {"x":1,"y":23,"w":31,"h":20},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":9,"y":29,"w":31,"h":20},
+	"sourceSize": {"w":64,"h":64}
+},
+{
+	"filename": "Viking_RunSpear_03.png",
+	"frame": {"x":1,"y":45,"w":31,"h":20},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":8,"y":28,"w":31,"h":20},
+	"sourceSize": {"w":64,"h":64}
+},
+{
+	"filename": "Viking_RunSpear_04.png",
+	"frame": {"x":1,"y":111,"w":31,"h":19},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":9,"y":31,"w":31,"h":19},
+	"sourceSize": {"w":64,"h":64}
+},
+{
+	"filename": "Viking_RunSpear_05.png",
+	"frame": {"x":1,"y":67,"w":31,"h":20},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":10,"y":30,"w":31,"h":20},
+	"sourceSize": {"w":64,"h":64}
+},
+{
+	"filename": "Viking_RunSpear_06.png",
+	"frame": {"x":1,"y":89,"w":31,"h":20},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":11,"y":29,"w":31,"h":20},
+	"sourceSize": {"w":64,"h":64}
+},
+{
+	"filename": "Viking_RunSpear_07.png",
+	"frame": {"x":1,"y":132,"w":31,"h":19},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":12,"y":28,"w":31,"h":19},
+	"sourceSize": {"w":64,"h":64}
+},
+{
+	"filename": "Viking_RunSpear_08.png",
+	"frame": {"x":1,"y":153,"w":31,"h":19},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":10,"y":31,"w":31,"h":19},
+	"sourceSize": {"w":64,"h":64}
+}],
+"meta": {
+	"app": "https://www.codeandweb.com/texturepacker",
+	"version": "1.0",
+	"image": "hero_spear_run.png",
+	"format": "RGBA8888",
+	"size": {"w":33,"h":173},
+	"scale": "1",
+	"smartupdate": "$TexturePacker:SmartUpdate:a0805831e00bd9b64bdc05a1e34096fe:74bb228e61ddf0bbca46a11acbfb1ce5:b6e33efd1aafb1479ba19417963879ac$"
+}
+}

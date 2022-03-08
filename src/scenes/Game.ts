@@ -13,6 +13,8 @@ export default class Game extends Phaser.Scene {
 
   private playerEnemyCollider?: Phaser.Physics.Arcade.Collider;
 
+  private axeHitbox!: Phaser.Types.Physics.Arcade.ImageWithDynamicBody;
+
   constructor() {
     super("game");
   }
@@ -53,16 +55,25 @@ export default class Game extends Phaser.Scene {
     createHeroAnims(this.anims);
 
     //front walls
-
     const wallsLayerFront = map.createLayer("WallsFront", tileset, 0, 0);
     wallsLayerFront.setCollisionByProperty({ collide: true });
 
     //UI
-
     this.scene.run("ui");
 
-    //collisions
+    //weapon hitbox
+    this.axeHitbox = this.add.rectangle(
+      0,
+      0,
+      28,
+      29,
+      0xffffff,
+      0
+    ) as unknown as Phaser.Types.Physics.Arcade.ImageWithDynamicBody;
+    this.physics.add.existing(this.axeHitbox);
+    this.physics.world.remove(this.axeHitbox.body);
 
+    //collisions
     this.physics.add.collider(this.hero, wallsLayer);
     this.physics.add.collider(this.hero, wallsLayerFront);
 
@@ -77,10 +88,26 @@ export default class Game extends Phaser.Scene {
       this
     );
 
+    this.physics.add.overlap(
+      this.axeHitbox,
+      orcWarriors,
+      this.handleEnemyDamage,
+      undefined,
+      this
+    );
+
     //camera
 
     this.cameras.main.startFollow(this.hero, true);
   }
+
+  private handleEnemyDamage = (
+    obj1: Phaser.GameObjects.GameObject,
+    obj2: Phaser.GameObjects.GameObject
+  ) => {
+    const enemy = obj2 as OrcWarrior;
+    enemy.destroy();
+  };
 
   private handlePlayerEnemyCollision = (
     obj1: Phaser.GameObjects.GameObject,
@@ -106,6 +133,32 @@ export default class Game extends Phaser.Scene {
 
     if (this.hero) {
       this.hero.update(this.cursors);
+    }
+
+    if (this.cursors.space.isDown) {
+      const startHit = (
+        anim: Phaser.Animations.Animation,
+        frame: Phaser.Animations.AnimationFrame
+      ) => {
+        if (frame.index < 6) {
+          return
+        } else if (frame.index >= 12) {
+          this.physics.world.remove(this.axeHitbox.body);
+          console.log("usuwam");
+          this.hero.off(Phaser.Animations.Events.ANIMATION_UPDATE, startHit);
+          
+        } else {
+          
+          console.log("wale");
+          this.physics.world.add(this.axeHitbox.body);
+          this.axeHitbox.x = this.hero.x;
+          this.axeHitbox.y = this.hero.y + 35;
+          
+        }
+      };
+
+      this.hero.on(Phaser.Animations.Events.ANIMATION_UPDATE, startHit);
+      
     }
   }
 }
