@@ -6,13 +6,10 @@ import OrcWarrior from "~/enemies/OrcWarrior";
 import "~/characters/Hero";
 import { sceneEvents } from "~/events/EventsCenter";
 import Hero from "~/characters/Hero";
-import Sword from "~/weapons/sword";
-import "~/weapons/sword";
 
 export default class Game extends Phaser.Scene {
   private cursors!: Phaser.Types.Input.Keyboard.CursorKeys;
   private hero!: Hero;
-  private sword!: Sword;
 
   private playerEnemyCollider?: Phaser.Physics.Arcade.Collider;
 
@@ -39,19 +36,21 @@ export default class Game extends Phaser.Scene {
       createCallback: (object) => {
         const orcObject = object as OrcWarrior;
         orcObject.body.onCollide = true;
+        orcObject.body.setSize(
+          orcObject.body.width * 0.8,
+          orcObject.body.height * 0.7
+        );
       },
     });
 
-    orcWarriors.get(256, 128, "orc_warrior");
+    orcWarriors.get(100, 100, "orc_warrior");
+    orcWarriors.get(200, 200, "orc_warrior");
+    orcWarriors.get(300, 300, "orc_warrior");
+    orcWarriors.get(400, 400, "orc_warrior");
 
     //hero character
     this.hero = this.add.hero(128, 128, "hero");
-
     createHeroAnims(this.anims);
-
-    //weapon
-    this.sword = this.add.sword(500, 128, "sword");
-    
 
     //front walls
 
@@ -89,7 +88,7 @@ export default class Game extends Phaser.Scene {
   ) => {
     const enemy = obj2 as OrcWarrior;
     const dx = this.hero.x - enemy.x;
-    const dy = this.hero.y - enemy.y;
+    const dy = this.hero.y - enemy.y + 40;
 
     const dir = new Phaser.Math.Vector2(dx, dy).normalize().scale(200);
 
@@ -105,16 +104,8 @@ export default class Game extends Phaser.Scene {
   update(time: number, delta: number): void {
     const speed = 150;
 
-    this.sword.x = this.hero.x+10;
-    this.sword.y = this.hero.y
-    
-
     if (this.hero) {
       this.hero.update(this.cursors);
-    }
-
-    if(this.sword){
-      this.sword.update(this.cursors)
     }
   }
 }

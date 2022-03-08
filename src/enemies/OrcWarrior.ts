@@ -67,7 +67,7 @@ export default class OrcWarrior extends Phaser.Physics.Arcade.Sprite {
   preUpdate(time: number, delta: number): void {
     super.preUpdate(time, delta);
 
-    const speed = 35;
+    const speed = 20;
 
     switch (this.direction) {
       case Direction.UP:
@@ -81,13 +81,13 @@ export default class OrcWarrior extends Phaser.Physics.Arcade.Sprite {
       case Direction.LEFT:
         this.setVelocity(-speed, 0);
         this.scaleX = -1;
-        this.body.offset.x = 16
+        this.body.offset.x = 16;
         break;
 
       case Direction.RIGHT:
         this.setVelocity(speed, 0);
         this.scaleX = 1;
-        this.body.offset.x = 0
+        this.body.offset.x = 3;
         break;
     }
   }

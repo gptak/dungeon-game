@@ -52,9 +52,8 @@ export default class Hero extends Phaser.Physics.Arcade.Sprite {
 
     if (this._health <= 0) {
       this._healthState = HealthState.DEAD;
-      this.anims.play("hero-idle");
-      this.setVelocity(0,0)
-
+      this.anims.play("hero-dead");
+      this.setVelocity(0, 0);
     } else {
       this.setVelocity(dir.x, dir.y);
       this.setTint(0xff0000);
@@ -88,33 +87,54 @@ export default class Hero extends Phaser.Physics.Arcade.Sprite {
       return;
     }
 
-    if (!cursors) {
-      return;
-    }
-
     const speed = 100;
 
-    if (cursors.left?.isDown) {
-      this.anims.play("hero-run", true);
-      this.setVelocity(-speed, 0);
+    if (cursors.space.isDown) {
+      this.anims.play("hero-axe-swing1", true);
+      this.setVelocity(0, 0);
+      console.log("nakurwiam");
+    }
 
-      this.scaleX = -1;
-      this.body.offset.x = 14;
-    } else if (cursors.right?.isDown) {
-      this.anims.play("hero-run", true);
-      this.setVelocity(speed, 0);
+    if (
+      (cursors.left.isDown ||
+        cursors.right.isDown ||
+        cursors.up.isDown ||
+        cursors.down.isDown) &&
+      cursors.space.isUp
+    ) {
+      if (cursors.left?.isDown) {
+        this.anims.play("hero-run", true);
+        this.setVelocityX(-speed);
+        this.scaleX = -1;
+        this.body.offset.x = 29;
+        console.log("biegne");
+      } else if (cursors.right?.isDown) {
+        this.anims.play("hero-run", true);
+        this.setVelocityX(speed);
+        this.scaleX = 1;
+        this.body.offset.x = 18;
+        console.log("biegne");
+      } else if (cursors.right?.isUp) {
+        this.setVelocityX(0);
+      } else if (cursors.left?.isUp) {
+        this.setVelocityX(0);
+      }
 
-      this.scaleX = 1;
-      this.body.offset.x = 2;
-    } else if (cursors.up?.isDown) {
-      this.anims.play("hero-run", true);
-      this.setVelocity(0, -speed);
-    } else if (cursors.down?.isDown) {
-      this.anims.play("hero-run", true);
-      this.setVelocity(0, speed);
-    } else {
+      if (cursors.up?.isDown) {
+        this.anims.play("hero-run", true);
+        this.setVelocityY(-speed);
+      } else if (cursors.down?.isDown) {
+        this.anims.play("hero-run", true);
+        this.setVelocityY(speed);
+      } else if (cursors.up?.isUp) {
+        this.setVelocityY(0);
+      } else if (cursors.down?.isUp) {
+        this.setVelocityY(0);
+      }
+    } else if (cursors.space.isUp) {
       this.anims.play("hero-idle", true);
       this.setVelocity(0, 0);
+      console.log("stoje");
     }
   }
 }
@@ -138,8 +158,10 @@ Phaser.GameObjects.GameObjectFactory.register(
       Phaser.Physics.Arcade.DYNAMIC_BODY
     );
 
-    sprite.body.setSize(sprite.width * 0.8, sprite.height * 0.4);
-    sprite.body.offset.y = 16;
+    sprite.setOrigin(0.4, 0);
+    sprite.body.setSize(sprite.width * 0.36, sprite.height * 0.4);
+    sprite.body.offset.y = 36;
+    sprite.body.offset.x = 18;
 
     return sprite;
   }

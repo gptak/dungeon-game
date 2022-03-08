@@ -1,0 +1,76 @@
+{"frames": [
+
+{
+	"filename": "Viking_RunAxe_01.png",
+	"frame": {"x":36,"y":1,"w":14,"h":20},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":17,"y":30,"w":14,"h":20},
+	"sourceSize": {"w":64,"h":64}
+},
+{
+	"filename": "Viking_RunAxe_02.png",
+	"frame": {"x":19,"y":1,"w":15,"h":20},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":16,"y":29,"w":15,"h":20},
+	"sourceSize": {"w":64,"h":64}
+},
+{
+	"filename": "Viking_RunAxe_03.png",
+	"frame": {"x":1,"y":1,"w":16,"h":20},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":15,"y":28,"w":16,"h":20},
+	"sourceSize": {"w":64,"h":64}
+},
+{
+	"filename": "Viking_RunAxe_04.png",
+	"frame": {"x":102,"y":1,"w":15,"h":19},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":16,"y":31,"w":15,"h":19},
+	"sourceSize": {"w":64,"h":64}
+},
+{
+	"filename": "Viking_RunAxe_05.png",
+	"frame": {"x":52,"y":1,"w":14,"h":20},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":17,"y":30,"w":14,"h":20},
+	"sourceSize": {"w":64,"h":64}
+},
+{
+	"filename": "Viking_RunAxe_06.png",
+	"frame": {"x":68,"y":1,"w":14,"h":20},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":17,"y":29,"w":14,"h":20},
+	"sourceSize": {"w":64,"h":64}
+},
+{
+	"filename": "Viking_RunAxe_07.png",
+	"frame": {"x":84,"y":1,"w":16,"h":19},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":17,"y":28,"w":16,"h":19},
+	"sourceSize": {"w":64,"h":64}
+},
+{
+	"filename": "Viking_RunAxe_08.png",
+	"frame": {"x":119,"y":1,"w":14,"h":19},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":17,"y":31,"w":14,"h":19},
+	"sourceSize": {"w":64,"h":64}
+}],
+"meta": {
+	"app": "https://www.codeandweb.com/texturepacker",
+	"version": "1.0",
+	"image": "hero_axe_run.png",
+	"format": "RGBA8888",
+	"size": {"w":134,"h":22},
+	"scale": "1",
+	"smartupdate": "$TexturePacker:SmartUpdate:6e7d529073ce3e03a1cfe76cb91cdf5e:e520212b2beeca9b41aa71a868c772fd:a8bab52284e1a71fa50bead96e06b7cd$"
+}
+}

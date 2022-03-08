@@ -1,0 +1,76 @@
+{"frames": [
+
+{
+	"filename": "Viking_IdleAxe_01.png",
+	"frame": {"x":33,"y":1,"w":14,"h":20},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":17,"y":30,"w":14,"h":20},
+	"sourceSize": {"w":64,"h":64}
+},
+{
+	"filename": "Viking_IdleAxe_02.png",
+	"frame": {"x":33,"y":1,"w":14,"h":20},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":17,"y":30,"w":14,"h":20},
+	"sourceSize": {"w":64,"h":64}
+},
+{
+	"filename": "Viking_IdleAxe_03.png",
+	"frame": {"x":17,"y":1,"w":14,"h":21},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":17,"y":29,"w":14,"h":21},
+	"sourceSize": {"w":64,"h":64}
+},
+{
+	"filename": "Viking_IdleAxe_04.png",
+	"frame": {"x":1,"y":1,"w":14,"h":22},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":17,"y":28,"w":14,"h":22},
+	"sourceSize": {"w":64,"h":64}
+},
+{
+	"filename": "Viking_IdleAxe_05.png",
+	"frame": {"x":65,"y":1,"w":16,"h":18},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":16,"y":32,"w":16,"h":18},
+	"sourceSize": {"w":64,"h":64}
+},
+{
+	"filename": "Viking_IdleAxe_06.png",
+	"frame": {"x":49,"y":1,"w":14,"h":19},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":17,"y":31,"w":14,"h":19},
+	"sourceSize": {"w":64,"h":64}
+},
+{
+	"filename": "Viking_IdleAxe_07.png",
+	"frame": {"x":33,"y":1,"w":14,"h":20},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":17,"y":30,"w":14,"h":20},
+	"sourceSize": {"w":64,"h":64}
+},
+{
+	"filename": "Viking_IdleAxe_08.png",
+	"frame": {"x":33,"y":1,"w":14,"h":20},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":17,"y":30,"w":14,"h":20},
+	"sourceSize": {"w":64,"h":64}
+}],
+"meta": {
+	"app": "https://www.codeandweb.com/texturepacker",
+	"version": "1.0",
+	"image": "hero_axe_idle.png",
+	"format": "RGBA8888",
+	"size": {"w":82,"h":24},
+	"scale": "1",
+	"smartupdate": "$TexturePacker:SmartUpdate:4950d3b755bf50bf3e1734d82ee1692e:ab48325e74c15b5fe13d7554e1c150d2:4dc1a0e425821b939a23ff9277869ab7$"
+}
+}
