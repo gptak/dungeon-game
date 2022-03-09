@@ -1,0 +1,84 @@
+{"frames": [
+
+{
+	"filename": "Hooded knight_finalsheet-59.png",
+	"frame": {"x":45,"y":62,"w":12,"h":26},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":26,"y":20,"w":12,"h":26},
+	"sourceSize": {"w":64,"h":64}
+},
+{
+	"filename": "Hooded knight_finalsheet-60.png",
+	"frame": {"x":34,"y":1,"w":27,"h":33},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":14,"y":22,"w":27,"h":33},
+	"sourceSize": {"w":64,"h":64}
+},
+{
+	"filename": "Hooded knight_finalsheet-61.png",
+	"frame": {"x":34,"y":36,"w":27,"h":24},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":14,"y":22,"w":27,"h":24},
+	"sourceSize": {"w":64,"h":64}
+},
+{
+	"filename": "Hooded knight_finalsheet-62.png",
+	"frame": {"x":1,"y":63,"w":24,"h":25},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":16,"y":21,"w":24,"h":25},
+	"sourceSize": {"w":64,"h":64}
+},
+{
+	"filename": "Hooded knight_finalsheet-63.png",
+	"frame": {"x":28,"y":90,"w":21,"h":22},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":19,"y":24,"w":21,"h":22},
+	"sourceSize": {"w":64,"h":64}
+},
+{
+	"filename": "Hooded knight_finalsheet-64.png",
+	"frame": {"x":1,"y":1,"w":31,"h":34},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":19,"y":22,"w":31,"h":34},
+	"sourceSize": {"w":64,"h":64}
+},
+{
+	"filename": "Hooded knight_finalsheet-65.png",
+	"frame": {"x":1,"y":37,"w":30,"h":24},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":20,"y":22,"w":30,"h":24},
+	"sourceSize": {"w":64,"h":64}
+},
+{
+	"filename": "Hooded knight_finalsheet-66.png",
+	"frame": {"x":1,"y":90,"w":25,"h":24},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":21,"y":22,"w":25,"h":24},
+	"sourceSize": {"w":64,"h":64}
+},
+{
+	"filename": "Hooded knight_finalsheet-67.png",
+	"frame": {"x":27,"y":63,"w":16,"h":24},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":23,"y":22,"w":16,"h":24},
+	"sourceSize": {"w":64,"h":64}
+}],
+"meta": {
+	"app": "https://www.codeandweb.com/texturepacker",
+	"version": "1.0",
+	"image": "attack_down.png",
+	"format": "RGBA8888",
+	"size": {"w":62,"h":115},
+	"scale": "1",
+	"smartupdate": "$TexturePacker:SmartUpdate:9f5c06ec41ebf1267305b56b8378edc6:991767590f8ca9df9fd08a369c74819e:1023b07d57f7b02a1615687c0e4773e5$"
+}
+}

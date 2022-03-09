@@ -1,0 +1,52 @@
+{"frames": [
+
+{
+	"filename": "Hooded knight_finalsheet-35.png",
+	"frame": {"x":33,"y":1,"w":12,"h":26},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":25,"y":20,"w":12,"h":26},
+	"sourceSize": {"w":64,"h":64}
+},
+{
+	"filename": "Hooded knight_finalsheet-36.png",
+	"frame": {"x":1,"y":1,"w":14,"h":26},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":24,"y":20,"w":14,"h":26},
+	"sourceSize": {"w":64,"h":64}
+},
+{
+	"filename": "Hooded knight_finalsheet-37.png",
+	"frame": {"x":17,"y":1,"w":14,"h":26},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":24,"y":20,"w":14,"h":26},
+	"sourceSize": {"w":64,"h":64}
+},
+{
+	"filename": "Hooded knight_finalsheet-38.png",
+	"frame": {"x":1,"y":1,"w":14,"h":26},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":24,"y":20,"w":14,"h":26},
+	"sourceSize": {"w":64,"h":64}
+},
+{
+	"filename": "Hooded knight_finalsheet-39.png",
+	"frame": {"x":17,"y":1,"w":14,"h":26},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":24,"y":20,"w":14,"h":26},
+	"sourceSize": {"w":64,"h":64}
+}],
+"meta": {
+	"app": "https://www.codeandweb.com/texturepacker",
+	"version": "1.0",
+	"image": "hit.png",
+	"format": "RGBA8888",
+	"size": {"w":46,"h":28},
+	"scale": "1",
+	"smartupdate": "$TexturePacker:SmartUpdate:a51d6a12958fc8db7408880f121bae2c:3d2138c711b60ac62a21128dc329c93e:d5574a87d8dc1efe69eb40879afd8922$"
+}
+}

@@ -1,0 +1,76 @@
+{"frames": [
+
+{
+	"filename": "Hooded knight_finalsheet-19.png",
+	"frame": {"x":1,"y":30,"w":13,"h":26},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":25,"y":21,"w":13,"h":26},
+	"sourceSize": {"w":64,"h":64}
+},
+{
+	"filename": "Hooded knight_finalsheet-20.png",
+	"frame": {"x":1,"y":58,"w":13,"h":26},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":25,"y":20,"w":13,"h":26},
+	"sourceSize": {"w":64,"h":64}
+},
+{
+	"filename": "Hooded knight_finalsheet-21.png",
+	"frame": {"x":1,"y":170,"w":12,"h":24},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":26,"y":19,"w":12,"h":24},
+	"sourceSize": {"w":64,"h":64}
+},
+{
+	"filename": "Hooded knight_finalsheet-22.png",
+	"frame": {"x":1,"y":1,"w":13,"h":27},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":26,"y":20,"w":13,"h":27},
+	"sourceSize": {"w":64,"h":64}
+},
+{
+	"filename": "Hooded knight_finalsheet-23.png",
+	"frame": {"x":1,"y":86,"w":13,"h":26},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":26,"y":21,"w":13,"h":26},
+	"sourceSize": {"w":64,"h":64}
+},
+{
+	"filename": "Hooded knight_finalsheet-24.png",
+	"frame": {"x":1,"y":114,"w":13,"h":26},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":26,"y":20,"w":13,"h":26},
+	"sourceSize": {"w":64,"h":64}
+},
+{
+	"filename": "Hooded knight_finalsheet-25.png",
+	"frame": {"x":1,"y":196,"w":12,"h":24},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":26,"y":19,"w":12,"h":24},
+	"sourceSize": {"w":64,"h":64}
+},
+{
+	"filename": "Hooded knight_finalsheet-26.png",
+	"frame": {"x":1,"y":142,"w":13,"h":26},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":25,"y":20,"w":13,"h":26},
+	"sourceSize": {"w":64,"h":64}
+}],
+"meta": {
+	"app": "https://www.codeandweb.com/texturepacker",
+	"version": "1.0",
+	"image": "run_down.png",
+	"format": "RGBA8888",
+	"size": {"w":15,"h":221},
+	"scale": "1",
+	"smartupdate": "$TexturePacker:SmartUpdate:ec4d5441e298cba1f56136be53ef66b2:1b8b36a1fc022ec263d4cf3a065eefcd:49428a3530aa8c77feea7622dcf0e73e$"
+}
+}

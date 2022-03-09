@@ -1,28 +1,27 @@
 import Phaser from "phaser";
-
-import { createOrcWarriorAnims } from "~/anims/EnemyAnims";
-import { createHeroAnims } from "~/anims/HeroAnims";
-import OrcWarrior from "~/enemies/OrcWarrior";
-import "~/characters/Hero";
-import { sceneEvents } from "~/events/EventsCenter";
-import Hero from "~/characters/Hero";
+import { Anims } from "~/anims/Anims";
+import StateMachine from "../statemachine/StateMachine";
 
 export default class Game extends Phaser.Scene {
+  private knight!: Phaser.Physics.Arcade.Sprite;
+  private knightStateMachine!: StateMachine;
+
   private cursors!: Phaser.Types.Input.Keyboard.CursorKeys;
-  private hero!: Hero;
-
-  private playerEnemyCollider?: Phaser.Physics.Arcade.Collider;
-
   private axeHitbox!: Phaser.Types.Physics.Arcade.ImageWithDynamicBody;
 
   constructor() {
     super("game");
   }
-  preload() {
+
+  init() {
     this.cursors = this.input.keyboard.createCursorKeys();
   }
+
   create() {
-    //background
+    //add anims
+    Anims(this.anims);
+
+    //add background and backwalls
     const map = this.make.tilemap({ key: "map" });
     const tileset = map.addTilesetImage("tiles", "tiles_map");
 
@@ -30,135 +29,292 @@ export default class Game extends Phaser.Scene {
     const wallsLayer = map.createLayer("Walls", tileset, 0, 0);
     wallsLayer.setCollisionByProperty({ collide: true });
 
-    //enemies
-    createOrcWarriorAnims(this.anims);
-
-    const orcWarriors = this.physics.add.group({
-      classType: OrcWarrior,
-      createCallback: (object) => {
-        const orcObject = object as OrcWarrior;
-        orcObject.body.onCollide = true;
-        orcObject.body.setSize(
-          orcObject.body.width * 0.8,
-          orcObject.body.height * 0.7
-        );
-      },
-    });
-
-    orcWarriors.get(100, 100, "orc_warrior");
-    orcWarriors.get(200, 200, "orc_warrior");
-    orcWarriors.get(300, 300, "orc_warrior");
-    orcWarriors.get(400, 400, "orc_warrior");
-
-    //hero character
-    this.hero = this.add.hero(128, 128, "hero");
-    createHeroAnims(this.anims);
+    //add hero
+    this.knight = this.physics.add.sprite(150, 150, "knight");
+    this.knight.setBodySize(this.knight.width * 0.36, this.knight.height * 0.4);
+    this.knight.setOrigin(0.4, 0);
+    this.knight.body.offset.x = 18;
+    this.knight.body.offset.y = 36;
 
     //front walls
     const wallsLayerFront = map.createLayer("WallsFront", tileset, 0, 0);
     wallsLayerFront.setCollisionByProperty({ collide: true });
 
-    //UI
-    this.scene.run("ui");
+    this.knightStateMachine = new StateMachine(this, "knight")
+      .addState("idle-up", {
+        onEnter: this.knightIdleUpEnter,
+        onUpdate: this.knightIdleUpUpdate,
+      })
+      .addState("idle-down", {
+        onEnter: this.knightIdleDownEnter,
+        onUpdate: this.knightIdleDownUpdate,
+      })
+      .addState("idle-right", {
+        onEnter: this.knightIdleRightEnter,
+        onUpdate: this.knightIdleRightUpdate,
+      })
+      .addState("idle-left", {
+        onEnter: this.knightIdleLeftEnter,
+        onUpdate: this.knightIdleLeftUpdate,
+      })
+      .addState("run-up", {
+        onEnter: this.knightRunUpEnter,
+        onUpdate: this.knightRunUpUpdate,
+      })
+      .addState("run-down", {
+        onEnter: this.knightRunDownEnter,
+        onUpdate: this.knightRunDownUpdate,
+      })
+      .addState("run-right", {
+        onEnter: this.knightRunRightEnter,
+        onUpdate: this.knightRunRightUpdate,
+      })
+      .addState("run-left", {
+        onEnter: this.knightRunLeftEnter,
+        onUpdate: this.knightRunLeftUpdate,
+      })
+      .addState("attack-up", {
+        onEnter: this.knightAttackUpEnter,
+      })
+      .addState("attack-down", {
+        onEnter: this.knightAttackDownEnter,
+      })
+      .addState("attack-right", {
+        onEnter: this.knightAttackRightEnter,
+      })
+      .addState("attack-left", {
+        onEnter: this.knightAttackLeftEnter,
+      });
+    this.knightStateMachine.setState("idle-down");
 
-    //weapon hitbox
+    // axe hitbox
     this.axeHitbox = this.add.rectangle(
       0,
       0,
-      28,
-      29,
+      30,
+      30,
       0xffffff,
       0
     ) as unknown as Phaser.Types.Physics.Arcade.ImageWithDynamicBody;
     this.physics.add.existing(this.axeHitbox);
+    this.axeHitbox.body.enable = false;
     this.physics.world.remove(this.axeHitbox.body);
-
-    //collisions
-    this.physics.add.collider(this.hero, wallsLayer);
-    this.physics.add.collider(this.hero, wallsLayerFront);
-
-    this.physics.add.collider(orcWarriors, wallsLayer);
-    this.physics.add.collider(orcWarriors, wallsLayerFront);
-
-    this.playerEnemyCollider = this.physics.add.collider(
-      orcWarriors,
-      this.hero,
-      this.handlePlayerEnemyCollision,
-      undefined,
-      this
-    );
-
-    this.physics.add.overlap(
-      this.axeHitbox,
-      orcWarriors,
-      this.handleEnemyDamage,
-      undefined,
-      this
-    );
+    console.log(this.axeHitbox.body);
 
     //camera
 
-    this.cameras.main.startFollow(this.hero, true);
+    this.cameras.main.startFollow(this.knight, true);
   }
 
-  private handleEnemyDamage = (
-    obj1: Phaser.GameObjects.GameObject,
-    obj2: Phaser.GameObjects.GameObject
-  ) => {
-    const enemy = obj2 as OrcWarrior;
-    enemy.destroy();
-  };
+  update(t: number, dt: number) {
+    this.knightStateMachine.update(dt);
+  }
 
-  private handlePlayerEnemyCollision = (
-    obj1: Phaser.GameObjects.GameObject,
-    obj2: Phaser.GameObjects.GameObject
-  ) => {
-    const enemy = obj2 as OrcWarrior;
-    const dx = this.hero.x - enemy.x;
-    const dy = this.hero.y - enemy.y + 40;
+  private knightIdleUpEnter() {
+    this.knight.play("idle-up");
+    this.knight.setVelocity(0, 0);
+  }
+  private knightIdleDownEnter() {
+    this.knight.play("idle-down");
+    this.knight.setVelocity(0, 0);
+  }
+  private knightIdleRightEnter() {
+    this.knight.play("idle-side");
+    this.knight.setVelocity(0, 0);
+  }
+  private knightIdleLeftEnter() {
+    this.knight.play("idle-side");
+    this.knight.setVelocity(0, 0);
+  }
 
-    const dir = new Phaser.Math.Vector2(dx, dy).normalize().scale(200);
-
-    this.hero.handleDamage(dir);
-
-    sceneEvents.emit("player-damage", this.hero.health);
-
-    if (this.hero.health <= 0) {
-      this.playerEnemyCollider?.destroy();
+  private knightIdleUpUpdate() {
+    if (this.cursors.up.isDown) {
+      this.knightStateMachine.setState("run-up");
+    } else if (this.cursors.down.isDown) {
+      this.knightStateMachine.setState("run-down");
+    } else if (this.cursors.right.isDown) {
+      this.knightStateMachine.setState("run-right");
+    } else if (this.cursors.left.isDown) {
+      this.knightStateMachine.setState("run-left");
+    } else if (this.cursors.space.isDown) {
+      this.knightStateMachine.setState("attack-up");
     }
-  };
+  }
 
-  update(time: number, delta: number): void {
-    const speed = 150;
-
-    if (this.hero) {
-      this.hero.update(this.cursors);
+  private knightIdleDownUpdate() {
+    if (this.cursors.up.isDown) {
+      this.knightStateMachine.setState("run-up");
+    } else if (this.cursors.down.isDown) {
+      this.knightStateMachine.setState("run-down");
+    } else if (this.cursors.right.isDown) {
+      this.knightStateMachine.setState("run-right");
+    } else if (this.cursors.left.isDown) {
+      this.knightStateMachine.setState("run-left");
+    } else if (this.cursors.space.isDown) {
+      this.knightStateMachine.setState("attack-down");
     }
+  }
 
+  private knightIdleRightUpdate() {
+    if (this.cursors.up.isDown) {
+      this.knightStateMachine.setState("run-up");
+    } else if (this.cursors.down.isDown) {
+      this.knightStateMachine.setState("run-down");
+    } else if (this.cursors.right.isDown) {
+      this.knightStateMachine.setState("run-right");
+    } else if (this.cursors.left.isDown) {
+      this.knightStateMachine.setState("run-left");
+    } else if (this.cursors.space.isDown) {
+      this.knightStateMachine.setState("attack-right");
+    }
+  }
+
+  private knightIdleLeftUpdate() {
+    if (this.cursors.up.isDown) {
+      this.knightStateMachine.setState("run-up");
+    } else if (this.cursors.down.isDown) {
+      this.knightStateMachine.setState("run-down");
+    } else if (this.cursors.right.isDown) {
+      this.knightStateMachine.setState("run-right");
+    } else if (this.cursors.left.isDown) {
+      this.knightStateMachine.setState("run-left");
+    } else if (this.cursors.space.isDown) {
+      this.knightStateMachine.setState("attack-left");
+    }
+  }
+
+  private knightRunUpEnter() {
+    this.knight.play("run-up");
+  }
+  private knightRunDownEnter() {
+    this.knight.play("run-down");
+  }
+  private knightRunLeftEnter() {
+    this.knight.play("run-side");
+  }
+  private knightRunRightEnter() {
+    this.knight.play("run-side");
+  }
+
+  private speed = 120;
+
+  private knightRunUpUpdate() {
     if (this.cursors.space.isDown) {
-      const startHit = (
-        anim: Phaser.Animations.Animation,
-        frame: Phaser.Animations.AnimationFrame
-      ) => {
-        if (frame.index < 6) {
-          return
-        } else if (frame.index >= 12) {
-          this.physics.world.remove(this.axeHitbox.body);
-          console.log("usuwam");
-          this.hero.off(Phaser.Animations.Events.ANIMATION_UPDATE, startHit);
-          
-        } else {
-          
-          console.log("wale");
-          this.physics.world.add(this.axeHitbox.body);
-          this.axeHitbox.x = this.hero.x;
-          this.axeHitbox.y = this.hero.y + 35;
-          
-        }
-      };
-
-      this.hero.on(Phaser.Animations.Events.ANIMATION_UPDATE, startHit);
-      
+      this.knightStateMachine.setState("attack-up");
+    } else if (this.cursors.up.isDown) {
+      this.knight.play("run-up", true);
+      this.knight.setVelocity(0, -this.speed);
+    } else {
+      this.knightStateMachine.setState("idle-up");
     }
+  }
+
+  private knightRunDownUpdate() {
+    if (this.cursors.space.isDown) {
+      this.knightStateMachine.setState("attack-down");
+    } else if (this.cursors.down.isDown) {
+      this.knight.play("run-down", true);
+      this.knight.setVelocity(0, this.speed);
+    } else {
+      this.knightStateMachine.setState("idle-down");
+    }
+  }
+
+  private knightRunRightUpdate() {
+    if (this.cursors.space.isDown) {
+      this.knightStateMachine.setState("attack-right");
+    } else if (this.cursors.right.isDown) {
+      this.knight.play("run-side", true);
+      this.knight.setVelocity(this.speed, 0);
+      this.knight.scaleX = 1;
+    } else {
+      this.knightStateMachine.setState("idle-right");
+    }
+  }
+
+  private knightRunLeftUpdate() {
+    if (this.cursors.space.isDown) {
+      this.knightStateMachine.setState("attack-left");
+    } else if (this.cursors.left.isDown) {
+      this.knight.play("run-side", true);
+      this.knight.setVelocity(-this.speed, 0);
+      this.knight.scaleX = -1;
+    } else {
+      this.knightStateMachine.setState("idle-left");
+    }
+  }
+
+  private knightAttackUpEnter() {
+    this.knight.setVelocity(0, 0);
+
+    this.knight.play("attack-up");
+    this.axeHitbox.x = this.knight.x;
+    this.axeHitbox.y = this.knight.y + 35;
+    this.physics.world.add(this.axeHitbox.body);
+
+    this.knight.once(
+      Phaser.Animations.Events.ANIMATION_COMPLETE_KEY + "attack-up",
+      () => {
+        this.knightStateMachine.setState("idle-up");
+        this.axeHitbox.body.enable = false;
+        this.physics.world.remove(this.axeHitbox.body);
+      }
+    );
+  }
+
+  private knightAttackDownEnter() {
+    this.knight.setVelocity(0, 0);
+
+    this.knight.play("attack-down");
+    this.axeHitbox.x = this.knight.x;
+    this.axeHitbox.y = this.knight.y + 35;
+    this.physics.world.add(this.axeHitbox.body);
+
+    this.knight.once(
+      Phaser.Animations.Events.ANIMATION_COMPLETE_KEY + "attack-down",
+      () => {
+        this.knightStateMachine.setState("idle-down");
+        this.axeHitbox.body.enable = false;
+        this.physics.world.remove(this.axeHitbox.body);
+      }
+    );
+  }
+
+  private knightAttackRightEnter() {
+    this.knight.setVelocity(0, 0);
+
+    this.knight.play("attack-side");
+    this.axeHitbox.x = this.knight.x;
+    this.axeHitbox.y = this.knight.y + 35;
+    this.knight.scaleX = 1;
+    this.physics.world.add(this.axeHitbox.body);
+
+    this.knight.once(
+      Phaser.Animations.Events.ANIMATION_COMPLETE_KEY + "attack-side",
+      () => {
+        this.knightStateMachine.setState("idle-right");
+        this.axeHitbox.body.enable = false;
+        this.physics.world.remove(this.axeHitbox.body);
+      }
+    );
+  }
+
+  private knightAttackLeftEnter() {
+    this.knight.setVelocity(0, 0);
+
+    this.knight.play("attack-side");
+    this.axeHitbox.x = this.knight.x;
+    this.axeHitbox.y = this.knight.y + 35;
+    this.knight.scaleX = -1;
+    this.physics.world.add(this.axeHitbox.body);
+
+    this.knight.once(
+      Phaser.Animations.Events.ANIMATION_COMPLETE_KEY + "attack-side",
+      () => {
+        this.knightStateMachine.setState("idle-left");
+        this.axeHitbox.body.enable = false;
+        this.physics.world.remove(this.axeHitbox.body);
+      }
+    );
   }
 }

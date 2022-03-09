@@ -7,20 +7,62 @@ export default class Preloader extends Phaser.Scene {
   preload() {
     this.load.image("tiles_map", "assets/tiles.png");
     this.load.tilemapTiledJSON("map", "assets/dungeon.json");
-
-    this.load.atlas("hero_axe_idle", "assets/hero_axe_idle.png", "assets/hero_axe_idle.json");
-    this.load.atlas("hero_axe_run", "assets/hero_axe_run.png", "assets/hero_axe_run.json");
-    this.load.atlas("hero_axe_swing1", "assets/hero_axe_swing1.png", "assets/hero_axe_swing1.json");
-    this.load.atlas("hero_dead", "assets/hero_dead.png", "assets/hero_dead.json");
+    
     this.load.atlas(
-      "orc_warrior",
-      "assets/orc_warrior.png",
-      "assets/orc_warrior.json"
+      "idle_up",
+      "assets/knight/idle_up.png",
+      "assets/knight/idle_up.json"
+    );
+    this.load.atlas(
+      "idle_side",
+      "assets/knight/idle_side.png",
+      "assets/knight/idle_side.json"
+    );
+    this.load.atlas(
+      "idle_down",
+      "assets/knight/idle_down.png",
+      "assets/knight/idle_down.json"
+    );
+    this.load.atlas(
+      "run_up",
+      "assets/knight/run_up.png",
+      "assets/knight/run_up.json"
+    );
+    this.load.atlas(
+      "run_side",
+      "assets/knight/run_side.png",
+      "assets/knight/run_side.json"
+    );
+    this.load.atlas(
+      "run_down",
+      "assets/knight/run_down.png",
+      "assets/knight/run_down.json"
+    );
+    this.load.atlas(
+      "attack_up",
+      "assets/knight/attack_up.png",
+      "assets/knight/attack_up.json"
+    );
+    this.load.atlas(
+      "attack_side",
+      "assets/knight/attack_side.png",
+      "assets/knight/attack_side.json"
+    );
+    this.load.atlas(
+      "attack_down",
+      "assets/knight/attack_down.png",
+      "assets/knight/attack_down.json"
+    );
+
+    this.load.atlas("hit", "assets/knight/hit.png", "assets/knight/hit.json");
+    this.load.atlas(
+      "dead",
+      "assets/knight/dead.png",
+      "assets/knight/dead.json"
     );
 
     this.load.image("ui_heart_empty", "assets/ui_heart_empty.png");
     this.load.image("ui_heart_full", "assets/ui_heart_full.png");
-    this.load.image("sword", "assets/weapon_rusty_sword.png");
   }
   create() {
     this.scene.start("game");

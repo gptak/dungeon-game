@@ -1,0 +1,36 @@
+{"frames": [
+
+{
+	"filename": "Hooded knight_finalsheet-6.png",
+	"frame": {"x":1,"y":30,"w":12,"h":26},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":26,"y":20,"w":12,"h":26},
+	"sourceSize": {"w":64,"h":64}
+},
+{
+	"filename": "Hooded knight_finalsheet-7.png",
+	"frame": {"x":1,"y":58,"w":12,"h":26},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":26,"y":20,"w":12,"h":26},
+	"sourceSize": {"w":64,"h":64}
+},
+{
+	"filename": "Hooded knight_finalsheet-8.png",
+	"frame": {"x":1,"y":1,"w":12,"h":27},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":26,"y":19,"w":12,"h":27},
+	"sourceSize": {"w":64,"h":64}
+}],
+"meta": {
+	"app": "https://www.codeandweb.com/texturepacker",
+	"version": "1.0",
+	"image": "idle_up.png",
+	"format": "RGBA8888",
+	"size": {"w":14,"h":85},
+	"scale": "1",
+	"smartupdate": "$TexturePacker:SmartUpdate:403bb37b53bfd12ea8beb7945c921142:ad0d43572063b0cb18bea47203580b39:681abdcb651049ef239872e6f97ed4ca$"
+}
+}
