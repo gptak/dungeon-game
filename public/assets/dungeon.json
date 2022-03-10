@@ -32,50 +32,6 @@
          "name":"Objects",
          "objects":[
                 {
-                 "height":31.6667,
-                 "id":3,
-                 "name":"slime",
-                 "rotation":0,
-                 "type":"",
-                 "visible":true,
-                 "width":31.6667,
-                 "x":200,
-                 "y":112.333
-                }, 
-                {
-                 "height":31.6667,
-                 "id":4,
-                 "name":"slime",
-                 "rotation":0,
-                 "type":"",
-                 "visible":true,
-                 "width":31.6667,
-                 "x":91.667,
-                 "y":203.167
-                }, 
-                {
-                 "height":31.6667,
-                 "id":5,
-                 "name":"slime",
-                 "rotation":0,
-                 "type":"",
-                 "visible":true,
-                 "width":31.6667,
-                 "x":195.167,
-                 "y":200.833
-                }, 
-                {
-                 "height":31.6667,
-                 "id":6,
-                 "name":"slime",
-                 "rotation":0,
-                 "type":"",
-                 "visible":true,
-                 "width":31.6667,
-                 "x":624.167,
-                 "y":415.5
-                }, 
-                {
                  "height":32,
                  "id":10,
                  "name":"knight-spawn",
@@ -85,6 +41,50 @@
                  "width":32,
                  "x":95.5,
                  "y":111.5
+                }, 
+                {
+                 "height":31.6667,
+                 "id":12,
+                 "name":"slime-spawn",
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":31.6667,
+                 "x":240.667,
+                 "y":112.167
+                }, 
+                {
+                 "height":31.6667,
+                 "id":13,
+                 "name":"slime-spawn",
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":31.6667,
+                 "x":240.167,
+                 "y":175.667
+                }, 
+                {
+                 "height":31.6667,
+                 "id":14,
+                 "name":"slime-spawn",
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":31.6667,
+                 "x":335.667,
+                 "y":176.167
+                }, 
+                {
+                 "height":31.6667,
+                 "id":21,
+                 "name":"slime-spawn",
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":31.6667,
+                 "x":336.66665,
+                 "y":111.66665
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -105,7 +105,7 @@
          "y":0
         }],
  "nextlayerid":5,
- "nextobjectid":12,
+ "nextobjectid":22,
  "orientation":"orthogonal",
  "renderorder":"right-down",
  "tiledversion":"1.8.2",

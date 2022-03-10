@@ -7,7 +7,7 @@ import UI from "./scenes/UI";
 const config: Phaser.Types.Core.GameConfig = {
   type: Phaser.AUTO,
   width: 600,
-  height: 300,
+  height: 400,
   physics: {
     default: "arcade",
     arcade: {

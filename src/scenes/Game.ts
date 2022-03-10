@@ -11,7 +11,7 @@ export default class Game extends Phaser.Scene {
 
   private swordHitbox!: Phaser.Types.Physics.Arcade.ImageWithDynamicBody;
 
-  private slimes: SlimeController[] = [];
+  private slimeControllers: SlimeController[] = [];
 
   constructor() {
     super("game");
@@ -19,7 +19,7 @@ export default class Game extends Phaser.Scene {
 
   init() {
     this.cursors = this.input.keyboard.createCursorKeys();
-    this.slimes = [];
+    this.slimeControllers = [];
   }
 
   create() {
@@ -77,16 +77,18 @@ export default class Game extends Phaser.Scene {
         case "slime-spawn":
           //slime spawn
           const slime = this.physics.add.sprite(x, y, "slime");
-          this.slimes.push(new SlimeController(this, slime));
-
+          this.slimeControllers.push(new SlimeController(this, slime));
+          
           //slime coliders
+          this.physics.add.collider(slime, this.knight);
           this.physics.add.collider(slime, wallsLayer);
           this.physics.add.collider(slime, wallsLayerFront);
-
+          
+          
           break;
-      }
-    });
-
+        }
+      });
+      
     //front walls
     const wallsLayerFront = map.createLayer("WallsFront", tileset, 0, 0);
     wallsLayerFront.setCollisionByProperty({ collide: true });
@@ -94,11 +96,11 @@ export default class Game extends Phaser.Scene {
 
   destroy() {
     this.scene.stop("ui");
-    this.slimes.forEach((slime) => slime.destroy());
+    this.slimeControllers.forEach((slime) => slime.destroy());
   }
 
   update(t: number, dt: number) {
     this.knightController?.update(dt);
-    this.slimes.forEach((slime) => slime.update(dt));
+    this.slimeControllers.forEach((slime) => slime.update(dt));
   }
 }
