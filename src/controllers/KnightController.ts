@@ -2,11 +2,11 @@ import Phaser from "phaser";
 import StateMachine from "../statemachine/StateMachine";
 
 export default class KnightController {
+  private scene: Phaser.Scene;
   private sprite: Phaser.Physics.Arcade.Sprite;
   private cursors: Phaser.Types.Input.Keyboard.CursorKeys;
+  private swordHitbox: Phaser.Types.Physics.Arcade.ImageWithDynamicBody;
   private stateMachine: StateMachine;
-  private scene: Phaser.Scene;
-  private swordHitbox;
 
   constructor(
     scene: Phaser.Scene,
@@ -14,13 +14,12 @@ export default class KnightController {
     cursors: Phaser.Types.Input.Keyboard.CursorKeys,
     swordHitbox: Phaser.Types.Physics.Arcade.ImageWithDynamicBody
   ) {
+    this.scene = scene;
     this.sprite = sprite;
     this.cursors = cursors;
-    this.scene = scene;
     this.swordHitbox = swordHitbox;
 
     this.sprite.setBodySize(this.sprite.width * 0.28, this.sprite.height * 0.4);
-    // this.sprite.setOrigin(0.5, 0);
     this.sprite.body.offset.x = 28;
     this.sprite.body.offset.y = 26;
 
@@ -43,19 +42,15 @@ export default class KnightController {
         onUpdate: this.knightIdleLeftUpdate,
       })
       .addState("run-up", {
-        onEnter: this.knightRunUpEnter,
         onUpdate: this.knightRunUpUpdate,
       })
       .addState("run-down", {
-        onEnter: this.knightRunDownEnter,
         onUpdate: this.knightRunDownUpdate,
       })
       .addState("run-right", {
-        onEnter: this.knightRunRightEnter,
         onUpdate: this.knightRunRightUpdate,
       })
       .addState("run-left", {
-        onEnter: this.knightRunLeftEnter,
         onUpdate: this.knightRunLeftUpdate,
       })
       .addState("attack-up", {
@@ -149,19 +144,6 @@ export default class KnightController {
     } else if (this.cursors.space.isDown) {
       this.stateMachine.setState("attack-left");
     }
-  }
-
-  private knightRunUpEnter() {
-    this.sprite.play("run-up");
-  }
-  private knightRunDownEnter() {
-    this.sprite.play("run-down");
-  }
-  private knightRunLeftEnter() {
-    this.sprite.play("run-side");
-  }
-  private knightRunRightEnter() {
-    this.sprite.play("run-side");
   }
 
   private speed = 120;

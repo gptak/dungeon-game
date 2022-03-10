@@ -53,12 +53,26 @@ export default class Preloader extends Phaser.Scene {
       "assets/knight/attack_down.png",
       "assets/knight/attack_down.json"
     );
-
     this.load.atlas("hit", "assets/knight/hit.png", "assets/knight/hit.json");
     this.load.atlas(
       "dead",
       "assets/knight/dead.png",
       "assets/knight/dead.json"
+    );
+    this.load.atlas(
+      "slime_run_up",
+      "assets/slime/slime_run_up.png",
+      "assets/slime/slime_run_up.json"
+    );
+    this.load.atlas(
+      "slime_run_side",
+      "assets/slime/slime_run_side.png",
+      "assets/slime/slime_run_side.json"
+    );
+    this.load.atlas(
+      "slime_run_down",
+      "assets/slime/slime_run_down.png",
+      "assets/slime/slime_run_down.json"
     );
 
     this.load.image("ui_heart_empty", "assets/ui_heart_empty.png");

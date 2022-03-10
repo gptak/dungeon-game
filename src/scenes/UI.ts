@@ -1,6 +1,6 @@
 import Phaser from "phaser";
 
-export default class GameUI extends Phaser.Scene {
+export default class UI extends Phaser.Scene {
   constructor() {
     super("gameUI");
   }

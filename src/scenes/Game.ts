@@ -1,14 +1,17 @@
 import Phaser from "phaser";
 import { Anims } from "~/anims/Anims";
-import StateMachine from "../statemachine/StateMachine";
+
 import KnightController from "~/controllers/KnightController";
+import SlimeController from "~/controllers/SlimeController";
 
 export default class Game extends Phaser.Scene {
-  private knight?: Phaser.Physics.Arcade.Sprite;
+  private knight!: Phaser.Physics.Arcade.Sprite;
   private knightController?: KnightController;
-
   private cursors!: Phaser.Types.Input.Keyboard.CursorKeys;
+
   private swordHitbox!: Phaser.Types.Physics.Arcade.ImageWithDynamicBody;
+
+  private slimes: SlimeController[] = [];
 
   constructor() {
     super("game");
@@ -16,9 +19,13 @@ export default class Game extends Phaser.Scene {
 
   init() {
     this.cursors = this.input.keyboard.createCursorKeys();
+    this.slimes = [];
   }
 
   create() {
+    //ui
+    this.scene.launch("ui");
+
     //anims
     Anims(this.anims);
 
@@ -29,15 +36,6 @@ export default class Game extends Phaser.Scene {
     map.createLayer("Floor", tileset, 0, 0);
     const wallsLayer = map.createLayer("Walls", tileset, 0, 0);
     wallsLayer.setCollisionByProperty({ collide: true });
-
-    //enemies
-
-    //knight
-    this.knight = this.physics.add.sprite(150, 150, "knight");
-
-    //front walls
-    const wallsLayerFront = map.createLayer("WallsFront", tileset, 0, 0);
-    wallsLayerFront.setCollisionByProperty({ collide: true });
 
     // sword hitbox
     this.swordHitbox = this.add.rectangle(
@@ -51,25 +49,56 @@ export default class Game extends Phaser.Scene {
     this.physics.add.existing(this.swordHitbox);
     this.swordHitbox.body.enable = false;
     this.physics.world.remove(this.swordHitbox.body);
-    console.log(this.swordHitbox.body);
 
-    //knight controller
-    this.knightController = new KnightController(
-      this,
-      this.knight,
-      this.cursors,
-      this.swordHitbox
-    );
+    //game objects creator
+    const objectsLayer = map.getObjectLayer("Objects");
+    objectsLayer.objects.forEach((objData) => {
+      const { x = 0, y = 0, name, width = 0, height = 0 } = objData;
 
-    //colliders
-    this.physics.add.collider(this.knight, wallsLayer);
-    this.physics.add.collider(this.knight, wallsLayerFront);
+      switch (name) {
+        case "knight-spawn":
+          //knight spawn
+          this.knight = this.physics.add.sprite(x, y, "knight");
+          this.knightController = new KnightController(
+            this,
+            this.knight,
+            this.cursors,
+            this.swordHitbox
+          );
 
-    // camera
-    this.cameras.main.startFollow(this.knight, true);
+          //knight colliders
+          this.physics.add.collider(this.knight, wallsLayer);
+          this.physics.add.collider(this.knight, wallsLayerFront);
+
+          //camera
+          this.cameras.main.startFollow(this.knight, true);
+          break;
+
+        case "slime-spawn":
+          //slime spawn
+          const slime = this.physics.add.sprite(x, y, "slime");
+          this.slimes.push(new SlimeController(this, slime));
+
+          //slime coliders
+          this.physics.add.collider(slime, wallsLayer);
+          this.physics.add.collider(slime, wallsLayerFront);
+
+          break;
+      }
+    });
+
+    //front walls
+    const wallsLayerFront = map.createLayer("WallsFront", tileset, 0, 0);
+    wallsLayerFront.setCollisionByProperty({ collide: true });
+  }
+
+  destroy() {
+    this.scene.stop("ui");
+    this.slimes.forEach((slime) => slime.destroy());
   }
 
   update(t: number, dt: number) {
     this.knightController?.update(dt);
+    this.slimes.forEach((slime) => slime.update(dt));
   }
 }
