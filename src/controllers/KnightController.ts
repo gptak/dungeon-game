@@ -19,10 +19,10 @@ export default class KnightController {
     this.scene = scene;
     this.swordHitbox = swordHitbox;
 
-    this.sprite.setBodySize(this.sprite.width * 0.28, this.sprite.height * 0.8);
+    this.sprite.setBodySize(this.sprite.width * 0.28, this.sprite.height * 0.4);
     // this.sprite.setOrigin(0.5, 0);
     this.sprite.body.offset.x = 28;
-    this.sprite.body.offset.y = 20;
+    this.sprite.body.offset.y = 26;
 
     this.createAnimation();
     this.stateMachine = new StateMachine(this, "knight")
@@ -194,8 +194,7 @@ export default class KnightController {
     } else if (this.cursors.right.isDown) {
       this.sprite.play("run-side", true);
       this.sprite.setVelocity(this.speed, 0);
-      this.sprite.scaleX = 1;
-      this.sprite.body.offset.x = 28;
+      this.sprite.flipX = false;
     } else {
       this.stateMachine.setState("idle-right");
     }
@@ -207,8 +206,7 @@ export default class KnightController {
     } else if (this.cursors.left.isDown) {
       this.sprite.play("run-side", true);
       this.sprite.setVelocity(-this.speed, 0);
-      this.sprite.scaleX = -1;
-      this.sprite.body.offset.x = 36;
+      this.sprite.flipX = true;
     } else {
       this.stateMachine.setState("idle-left");
     }
@@ -239,7 +237,7 @@ export default class KnightController {
 
     this.sprite.play("attack-down");
     this.swordHitbox.x = this.sprite.x;
-    this.swordHitbox.y = this.sprite.y + 6;
+    this.swordHitbox.y = this.sprite.y + 8;
     setTimeout(() => {
       this.scene.physics.world.add(this.swordHitbox.body);
     }, 50);
@@ -258,9 +256,9 @@ export default class KnightController {
     this.sprite.setVelocity(0, 0);
 
     this.sprite.play("attack-side");
-    this.swordHitbox.x = this.sprite.x+2;
-    this.swordHitbox.y = this.sprite.y;
-    this.sprite.scaleX = 1;
+    this.swordHitbox.x = this.sprite.x + 2;
+    this.swordHitbox.y = this.sprite.y + 1;
+    this.sprite.flipX = false;
     setTimeout(() => {
       this.scene.physics.world.add(this.swordHitbox.body);
     }, 50);
@@ -279,9 +277,9 @@ export default class KnightController {
     this.sprite.setVelocity(0, 0);
 
     this.sprite.play("attack-side");
-    this.swordHitbox.x = this.sprite.x-2;
-    this.swordHitbox.y = this.sprite.y;
-    this.sprite.scaleX = -1;
+    this.swordHitbox.x = this.sprite.x - 2;
+    this.swordHitbox.y = this.sprite.y + 1;
+    this.sprite.flipX = true;
     setTimeout(() => {
       this.scene.physics.world.add(this.swordHitbox.body);
     }, 50);
