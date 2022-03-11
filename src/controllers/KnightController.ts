@@ -1,4 +1,6 @@
 import Phaser from "phaser";
+import SlimeController from "./SlimeController";
+
 import StateMachine from "../statemachine/StateMachine";
 
 export default class KnightController {
@@ -6,18 +8,21 @@ export default class KnightController {
   private sprite: Phaser.Physics.Arcade.Sprite;
   private cursors: Phaser.Types.Input.Keyboard.CursorKeys;
   private swordHitbox: Phaser.Types.Physics.Arcade.ImageWithDynamicBody;
-  private stateMachine: StateMachine;
+  private slimeControllers: SlimeController[] = [];
+  stateMachine: StateMachine;
 
   constructor(
     scene: Phaser.Scene,
     sprite: Phaser.Physics.Arcade.Sprite,
     cursors: Phaser.Types.Input.Keyboard.CursorKeys,
-    swordHitbox: Phaser.Types.Physics.Arcade.ImageWithDynamicBody
+    swordHitbox: Phaser.Types.Physics.Arcade.ImageWithDynamicBody,
+    slimeControllers: SlimeController[] = []
   ) {
     this.scene = scene;
     this.sprite = sprite;
     this.cursors = cursors;
     this.swordHitbox = swordHitbox;
+    this.slimeControllers = slimeControllers;
 
     this.sprite.setBodySize(this.sprite.width * 0.28, this.sprite.height * 0.4);
     this.sprite.body.offset.x = 28;
@@ -64,6 +69,9 @@ export default class KnightController {
       })
       .addState("attack-left", {
         onEnter: this.knightAttackLeftEnter,
+      })
+      .addState("hit", {
+        onEnter: this.knightHitEnter,
       });
 
     this.stateMachine.setState("idle-down");
@@ -71,6 +79,22 @@ export default class KnightController {
 
   update(dt: number) {
     this.stateMachine.update(dt);
+  }
+
+  knightCollison(dir: Phaser.Math.Vector2) {
+    this.sprite.setVelocity(dir.x, dir.y);
+    this.stateMachine.setState("hit");
+  }
+
+  private knightHitEnter() {
+    this.sprite.play("hit");
+    this.sprite.once(
+      Phaser.Animations.Events.ANIMATION_COMPLETE_KEY + "hit",
+      () => {
+        this.stateMachine.setState("idle-down");
+        this.sprite.setVelocity(0, 0);
+      }
+    );
   }
 
   private knightIdleUpEnter() {

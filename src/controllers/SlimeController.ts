@@ -7,13 +7,14 @@ export default class SlimeController {
   private sprite: Phaser.Physics.Arcade.Sprite;
 
   private moveTime = 0;
+  private hitPoints = 1;
 
   constructor(scene: Phaser.Scene, sprite: Phaser.Physics.Arcade.Sprite) {
     this.scene = scene;
     this.sprite = sprite;
 
     this.sprite.setBodySize(this.sprite.width * 0.4, this.sprite.height * 0.4);
-    
+
     this.createAnimation();
     this.stateMachine = new StateMachine(this, "slime");
 
@@ -36,17 +37,61 @@ export default class SlimeController {
       .addState("slime-run-right", {
         onEnter: this.slimeRunEnter,
         onUpdate: this.slimeRunRightUpdate,
+      })
+      .addState("slime-hit", {
+        onEnter: this.slimeHitEnter,
+      })
+      .addState("slime-dead", {
+        onEnter: this.slimeDeadEnter,
       });
 
     this.stateMachine.setState("slime-idle");
   }
 
-  destroy(){
-    
-  }
+  destroy() {}
 
   update(dt: number) {
     this.stateMachine.update(dt);
+  }
+
+  handleSlimeHit(
+    dir: Phaser.Math.Vector2,
+    slime: Phaser.Physics.Arcade.Sprite
+  ) {
+    if (slime === this.sprite) {
+      console.log(this.hitPoints);
+      this.hitPoints--
+      if (this.hitPoints >= 1) {
+        this.sprite.setVelocity(dir.x, dir.y);
+        this.stateMachine.setState("slime-hit");
+      }else{
+        this.sprite.setVelocity(dir.x, dir.y);
+        this.stateMachine.setState("slime-dead");
+      }
+    } else {
+      return;
+    }
+  }
+
+  private slimeHitEnter() {
+    this.sprite.play("slime-hit");
+    this.sprite.once(
+      Phaser.Animations.Events.ANIMATION_COMPLETE_KEY + "slime-hit",
+      () => {
+        this.stateMachine.setState("slime-idle");
+        this.sprite.setVelocity(0, 0);
+      }
+    );
+  }
+
+  private slimeDeadEnter() {
+    this.sprite.play("slime-hit");
+    this.sprite.once(
+      Phaser.Animations.Events.ANIMATION_COMPLETE_KEY + "slime-hit",
+      () => {
+        this.sprite.setVelocity(0, 0);
+      }
+    );
   }
 
   private slimeIdleEnter() {
@@ -68,11 +113,10 @@ export default class SlimeController {
   }
 
   private speed = 20;
-  
 
   private slimeRunUpUpdate(dt: number) {
     this.moveTime += dt;
-    this.sprite.play("slime-run-up",true);
+    this.sprite.play("slime-run-up", true);
     this.sprite.setVelocity(0, -this.speed);
     if (this.moveTime > Math.floor(Math.random() * 4000 + 6000)) {
       const r = Phaser.Math.Between(1, 100);
@@ -88,7 +132,7 @@ export default class SlimeController {
 
   private slimeRunDownUpdate(dt: number) {
     this.moveTime += dt;
-    this.sprite.play("slime-run-down",true);
+    this.sprite.play("slime-run-down", true);
     this.sprite.setVelocity(0, this.speed);
 
     if (this.moveTime > Math.floor(Math.random() * 6000 + 4000)) {
@@ -105,7 +149,7 @@ export default class SlimeController {
 
   private slimeRunLeftUpdate(dt: number) {
     this.moveTime += dt;
-    this.sprite.play("slime-run-side",true);
+    this.sprite.play("slime-run-side", true);
     this.sprite.setVelocity(-this.speed, 0);
     this.sprite.flipX = true;
     if (this.moveTime > Math.floor(Math.random() * 5000 + 5000)) {
@@ -122,7 +166,7 @@ export default class SlimeController {
 
   private slimeRunRightUpdate(dt: number) {
     this.moveTime += dt;
-    this.sprite.play("slime-run-side",true);
+    this.sprite.play("slime-run-side", true);
     this.sprite.setVelocity(this.speed, 0);
     this.sprite.flipX = false;
     if (this.moveTime > Math.floor(Math.random() * 7000 + 3000)) {
@@ -170,6 +214,16 @@ export default class SlimeController {
       }),
       frameRate: 10,
       repeat: -1,
+    });
+    this.sprite.anims.create({
+      key: "slime-hit",
+      frames: this.sprite.anims.generateFrameNames("slime_hit", {
+        start: 0,
+        end: 3,
+        prefix: "Slime_Medium_Green-",
+        suffix: ".png",
+      }),
+      frameRate: 10,
     });
   }
 }

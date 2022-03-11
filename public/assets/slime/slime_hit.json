@@ -1,0 +1,44 @@
+{"frames": [
+
+{
+	"filename": "Slime_Medium_Green-0.png",
+	"frame": {"x":20,"y":18,"w":16,"h":13},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":8,"y":9,"w":16,"h":13},
+	"sourceSize": {"w":32,"h":32}
+},
+{
+	"filename": "Slime_Medium_Green-1.png",
+	"frame": {"x":1,"y":16,"w":17,"h":13},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":8,"y":9,"w":17,"h":13},
+	"sourceSize": {"w":32,"h":32}
+},
+{
+	"filename": "Slime_Medium_Green-2.png",
+	"frame": {"x":21,"y":1,"w":14,"h":15},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":9,"y":9,"w":14,"h":15},
+	"sourceSize": {"w":32,"h":32}
+},
+{
+	"filename": "Slime_Medium_Green-3.png",
+	"frame": {"x":1,"y":1,"w":18,"h":13},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":7,"y":9,"w":18,"h":13},
+	"sourceSize": {"w":32,"h":32}
+}],
+"meta": {
+	"app": "https://www.codeandweb.com/texturepacker",
+	"version": "1.0",
+	"image": "slime_hit.png",
+	"format": "RGBA8888",
+	"size": {"w":37,"h":32},
+	"scale": "1",
+	"smartupdate": "$TexturePacker:SmartUpdate:5a1c4324c70e83c88207e91cd4903ea4:300201cfbe1f124cbe9750f6c56d4560:8d0f63ca25001a58aa8d4f44c5da40b6$"
+}
+}
