@@ -7,21 +7,26 @@ export default class KnightController {
   private scene: Phaser.Scene;
   private sprite: Phaser.Physics.Arcade.Sprite;
   private cursors: Phaser.Types.Input.Keyboard.CursorKeys;
-  private swordHitbox: Phaser.Types.Physics.Arcade.ImageWithDynamicBody;
+  private swordHitbox1: Phaser.Types.Physics.Arcade.ImageWithDynamicBody;
+  private swordHitbox2: Phaser.Types.Physics.Arcade.ImageWithDynamicBody;
   private slimeControllers: SlimeController[] = [];
-  stateMachine: StateMachine;
+  private stateMachine: StateMachine;
+
+  private hitPoints = 30;
 
   constructor(
     scene: Phaser.Scene,
     sprite: Phaser.Physics.Arcade.Sprite,
     cursors: Phaser.Types.Input.Keyboard.CursorKeys,
-    swordHitbox: Phaser.Types.Physics.Arcade.ImageWithDynamicBody,
+    swordHitbox1: Phaser.Types.Physics.Arcade.ImageWithDynamicBody,
+    swordHitbox2: Phaser.Types.Physics.Arcade.ImageWithDynamicBody,
     slimeControllers: SlimeController[] = []
   ) {
     this.scene = scene;
     this.sprite = sprite;
     this.cursors = cursors;
-    this.swordHitbox = swordHitbox;
+    this.swordHitbox2 = swordHitbox1;
+    this.swordHitbox1 = swordHitbox2;
     this.slimeControllers = slimeControllers;
 
     this.sprite.setBodySize(this.sprite.width * 0.28, this.sprite.height * 0.4);
@@ -72,6 +77,9 @@ export default class KnightController {
       })
       .addState("hit", {
         onEnter: this.knightHitEnter,
+      })
+      .addState("dead", {
+        onEnter: this.knightDeadEnter,
       });
 
     this.stateMachine.setState("idle-down");
@@ -81,20 +89,34 @@ export default class KnightController {
     this.stateMachine.update(dt);
   }
 
-  knightCollison(dir: Phaser.Math.Vector2) {
+  knightCollison(dir: Phaser.Math.Vector2, dmg: number) {
+    this.hitPoints -= dmg;
+    console.log(this.hitPoints);
     this.sprite.setVelocity(dir.x, dir.y);
-    this.stateMachine.setState("hit");
+    this.swordHitbox2.body.enable = false;
+    this.swordHitbox1.body.enable = false;
+    if (this.hitPoints > 0) {
+      this.stateMachine.setState("hit");
+    } else {
+      this.stateMachine.setState("dead");
+    }
   }
 
   private knightHitEnter() {
     this.sprite.play("hit");
+
     this.sprite.once(
       Phaser.Animations.Events.ANIMATION_COMPLETE_KEY + "hit",
       () => {
         this.stateMachine.setState("idle-down");
-        this.sprite.setVelocity(0, 0);
       }
     );
+  }
+
+  private knightDeadEnter() {
+    this.sprite.play("dead");
+    this.sprite.disableBody();
+    this.sprite.setVelocity(0, 0);
   }
 
   private knightIdleUpEnter() {
@@ -222,18 +244,18 @@ export default class KnightController {
     this.sprite.setVelocity(0, 0);
 
     this.sprite.play("attack-up");
-    this.swordHitbox.x = this.sprite.x;
-    this.swordHitbox.y = this.sprite.y - 4;
+    this.swordHitbox1.x = this.sprite.x;
+    this.swordHitbox1.y = this.sprite.y - 8;
     setTimeout(() => {
-      this.scene.physics.world.add(this.swordHitbox.body);
+      this.scene.physics.world.add(this.swordHitbox1.body);
     }, 50);
 
     this.sprite.once(
       Phaser.Animations.Events.ANIMATION_COMPLETE_KEY + "attack-up",
       () => {
         this.stateMachine.setState("idle-up");
-        this.swordHitbox.body.enable = false;
-        this.scene.physics.world.remove(this.swordHitbox.body);
+        this.swordHitbox1.body.enable = false;
+        this.scene.physics.world.remove(this.swordHitbox1.body);
       }
     );
   }
@@ -242,18 +264,18 @@ export default class KnightController {
     this.sprite.setVelocity(0, 0);
 
     this.sprite.play("attack-down");
-    this.swordHitbox.x = this.sprite.x;
-    this.swordHitbox.y = this.sprite.y + 8;
+    this.swordHitbox1.x = this.sprite.x;
+    this.swordHitbox1.y = this.sprite.y + 10;
     setTimeout(() => {
-      this.scene.physics.world.add(this.swordHitbox.body);
+      this.scene.physics.world.add(this.swordHitbox1.body);
     }, 50);
 
     this.sprite.once(
       Phaser.Animations.Events.ANIMATION_COMPLETE_KEY + "attack-down",
       () => {
         this.stateMachine.setState("idle-down");
-        this.swordHitbox.body.enable = false;
-        this.scene.physics.world.remove(this.swordHitbox.body);
+        this.swordHitbox1.body.enable = false;
+        this.scene.physics.world.remove(this.swordHitbox1.body);
       }
     );
   }
@@ -262,19 +284,19 @@ export default class KnightController {
     this.sprite.setVelocity(0, 0);
 
     this.sprite.play("attack-side");
-    this.swordHitbox.x = this.sprite.x + 2;
-    this.swordHitbox.y = this.sprite.y + 1;
+    this.swordHitbox2.x = this.sprite.x + 10;
+    this.swordHitbox2.y = this.sprite.y + 3;
     this.sprite.flipX = false;
     setTimeout(() => {
-      this.scene.physics.world.add(this.swordHitbox.body);
+      this.scene.physics.world.add(this.swordHitbox2.body);
     }, 50);
 
     this.sprite.once(
       Phaser.Animations.Events.ANIMATION_COMPLETE_KEY + "attack-side",
       () => {
         this.stateMachine.setState("idle-right");
-        this.swordHitbox.body.enable = false;
-        this.scene.physics.world.remove(this.swordHitbox.body);
+        this.swordHitbox2.body.enable = false;
+        this.scene.physics.world.remove(this.swordHitbox2.body);
       }
     );
   }
@@ -283,19 +305,19 @@ export default class KnightController {
     this.sprite.setVelocity(0, 0);
 
     this.sprite.play("attack-side");
-    this.swordHitbox.x = this.sprite.x - 2;
-    this.swordHitbox.y = this.sprite.y + 1;
+    this.swordHitbox2.x = this.sprite.x - 10;
+    this.swordHitbox2.y = this.sprite.y + 3;
     this.sprite.flipX = true;
     setTimeout(() => {
-      this.scene.physics.world.add(this.swordHitbox.body);
+      this.scene.physics.world.add(this.swordHitbox2.body);
     }, 50);
 
     this.sprite.once(
       Phaser.Animations.Events.ANIMATION_COMPLETE_KEY + "attack-side",
       () => {
         this.stateMachine.setState("idle-left");
-        this.swordHitbox.body.enable = false;
-        this.scene.physics.world.remove(this.swordHitbox.body);
+        this.swordHitbox2.body.enable = false;
+        this.scene.physics.world.remove(this.swordHitbox2.body);
       }
     );
   }
@@ -421,7 +443,7 @@ export default class KnightController {
         prefix: "Hooded knight_finalsheet-",
         suffix: ".png",
       }),
-      frameRate: 20,
+      frameRate: 8,
     });
   }
 }

@@ -7,7 +7,7 @@ export default class SlimeController {
   private sprite: Phaser.Physics.Arcade.Sprite;
 
   private moveTime = 0;
-  private hitPoints = 1;
+  private hitPoints = 10;
 
   constructor(scene: Phaser.Scene, sprite: Phaser.Physics.Arcade.Sprite) {
     this.scene = scene;
@@ -58,16 +58,11 @@ export default class SlimeController {
     dir: Phaser.Math.Vector2,
     slime: Phaser.Physics.Arcade.Sprite
   ) {
-    if (slime === this.sprite) {
+    if (slime === this.sprite && this.hitPoints >= 1) {
+      this.sprite.setVelocity(dir.x, dir.y);
+      this.stateMachine.setState("slime-hit");
+      this.hitPoints--;
       console.log(this.hitPoints);
-      this.hitPoints--
-      if (this.hitPoints >= 1) {
-        this.sprite.setVelocity(dir.x, dir.y);
-        this.stateMachine.setState("slime-hit");
-      }else{
-        this.sprite.setVelocity(dir.x, dir.y);
-        this.stateMachine.setState("slime-dead");
-      }
     } else {
       return;
     }
@@ -78,20 +73,18 @@ export default class SlimeController {
     this.sprite.once(
       Phaser.Animations.Events.ANIMATION_COMPLETE_KEY + "slime-hit",
       () => {
-        this.stateMachine.setState("slime-idle");
-        this.sprite.setVelocity(0, 0);
+        if (this.hitPoints > 0) {
+          this.stateMachine.setState("slime-idle");
+        } else {
+          this.stateMachine.setState("slime-dead")
+        }
       }
     );
   }
 
   private slimeDeadEnter() {
     this.sprite.play("slime-hit");
-    this.sprite.once(
-      Phaser.Animations.Events.ANIMATION_COMPLETE_KEY + "slime-hit",
-      () => {
-        this.sprite.setVelocity(0, 0);
-      }
-    );
+    this.sprite.disableBody()
   }
 
   private slimeIdleEnter() {

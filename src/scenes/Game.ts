@@ -7,12 +7,9 @@ export default class Game extends Phaser.Scene {
   private knight!: Phaser.Physics.Arcade.Sprite;
   private knightController?: KnightController;
   private cursors!: Phaser.Types.Input.Keyboard.CursorKeys;
-
-  private swordHitbox!: Phaser.Types.Physics.Arcade.ImageWithDynamicBody;
-
+  private swordHitbox1!: Phaser.Types.Physics.Arcade.ImageWithDynamicBody;
+  private swordHitbox2!: Phaser.Types.Physics.Arcade.ImageWithDynamicBody;
   private slimeControllers: SlimeController[] = [];
-
-  private slimeCounter = 0;
 
   constructor() {
     super("game");
@@ -21,7 +18,6 @@ export default class Game extends Phaser.Scene {
   init() {
     this.cursors = this.input.keyboard.createCursorKeys();
     this.slimeControllers = [];
-    this.slimeCounter = 0;
   }
 
   create() {
@@ -42,17 +38,29 @@ export default class Game extends Phaser.Scene {
     wallsLayerFront.setCollisionByProperty({ collide: true });
 
     // sword hitbox
-    this.swordHitbox = this.add.rectangle(
+    this.swordHitbox1 = this.add.rectangle(
       0,
       0,
-      35,
+      18,
       32,
       0xffffff,
       0
     ) as unknown as Phaser.Types.Physics.Arcade.ImageWithDynamicBody;
-    this.physics.add.existing(this.swordHitbox);
-    this.swordHitbox.body.enable = false;
-    this.physics.world.remove(this.swordHitbox.body);
+    this.physics.add.existing(this.swordHitbox1);
+    this.swordHitbox1.body.enable = false;
+    this.physics.world.remove(this.swordHitbox1.body);
+
+    this.swordHitbox2 = this.add.rectangle(
+      0,
+      0,
+      32,
+      25,
+      0xffffff,
+      0
+    ) as unknown as Phaser.Types.Physics.Arcade.ImageWithDynamicBody;
+    this.physics.add.existing(this.swordHitbox2);
+    this.swordHitbox2.body.enable = false;
+    this.physics.world.remove(this.swordHitbox2.body);
 
     //game objects creator
     const objectsLayer = map.getObjectLayer("Objects");
@@ -67,7 +75,8 @@ export default class Game extends Phaser.Scene {
             this,
             this.knight,
             this.cursors,
-            this.swordHitbox,
+            this.swordHitbox1,
+            this.swordHitbox2,
             this.slimeControllers
           );
 
@@ -80,11 +89,9 @@ export default class Game extends Phaser.Scene {
           break;
 
         case "slime-spawn":
-          this.slimeCounter++;
           //slime spawn
           const slime = this.physics.add.sprite(x, y, "slime");
           this.slimeControllers.push(new SlimeController(this, slime));
-          console.log(this.slimeControllers);
 
           //slime coliders
           this.physics.add.collider(
@@ -94,8 +101,15 @@ export default class Game extends Phaser.Scene {
             undefined,
             this
           );
-          this.physics.add.collider(
-            this.swordHitbox,
+          this.physics.add.overlap(
+            this.swordHitbox1,
+            slime,
+            this.handleSwordSlimeCollision,
+            undefined,
+            this
+          );
+          this.physics.add.overlap(
+            this.swordHitbox2,
             slime,
             this.handleSwordSlimeCollision,
             undefined,
@@ -122,8 +136,9 @@ export default class Game extends Phaser.Scene {
     const dx = this.knight.x - slime.x;
     const dy = this.knight.y - slime.y;
     const dir = new Phaser.Math.Vector2(dx, dy).normalize().scale(200);
+    const slimeDmg = 10;
 
-    this.knightController?.knightCollison(dir);
+    this.knightController?.knightCollison(dir, slimeDmg);
   }
 
   private handleSwordSlimeCollision(
@@ -132,14 +147,13 @@ export default class Game extends Phaser.Scene {
     obj2: Phaser.GameObjects.GameObject
   ) {
     const slime = obj2 as Phaser.Physics.Arcade.Sprite;
-    const dx = slime.x - this.swordHitbox.x;
-    const dy = slime.y - this.swordHitbox.y;
+    const dx = slime.x - this.knight.x;
+    const dy = slime.y - this.knight.y;
     const dir = new Phaser.Math.Vector2(dx, dy).normalize().scale(100);
 
     this.slimeControllers.forEach((slimeController) => {
       slimeController.handleSlimeHit(dir, slime);
     });
-    // console.log(slime.body.gameObject);
   }
 
   update(t: number, dt: number) {
