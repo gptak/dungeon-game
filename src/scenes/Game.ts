@@ -1,5 +1,6 @@
 import Phaser from "phaser";
 import { Anims } from "~/anims/Anims";
+import { sceneEvents } from "~/events center/EventsCenter";
 
 import KnightController from "~/controllers/KnightController";
 import SlimeController from "~/controllers/SlimeController";
@@ -22,7 +23,7 @@ export default class Game extends Phaser.Scene {
 
   create() {
     //ui
-    this.scene.launch("ui");
+    this.scene.launch("UI");
 
     //anims
     Anims(this.anims);
@@ -37,12 +38,12 @@ export default class Game extends Phaser.Scene {
     wallsLayer.setCollisionByProperty({ collide: true });
     wallsLayerFront.setCollisionByProperty({ collide: true });
 
-    // sword hitbox
+    // sword hitboxes
     this.swordHitbox1 = this.add.rectangle(
       0,
       0,
       18,
-      32,
+      30,
       0xffffff,
       0
     ) as unknown as Phaser.Types.Physics.Arcade.ImageWithDynamicBody;
@@ -76,8 +77,7 @@ export default class Game extends Phaser.Scene {
             this.knight,
             this.cursors,
             this.swordHitbox1,
-            this.swordHitbox2,
-            this.slimeControllers
+            this.swordHitbox2
           );
 
           //knight colliders
@@ -97,21 +97,21 @@ export default class Game extends Phaser.Scene {
           this.physics.add.collider(
             this.knight,
             slime,
-            this.handleKnightSlimeCollision,
+            this.handleKnightHitBySlime,
             undefined,
             this
           );
           this.physics.add.overlap(
             this.swordHitbox1,
             slime,
-            this.handleSwordSlimeCollision,
+            this.handleSlimeHitBySword,
             undefined,
             this
           );
           this.physics.add.overlap(
             this.swordHitbox2,
             slime,
-            this.handleSwordSlimeCollision,
+            this.handleSlimeHitBySword,
             undefined,
             this
           );
@@ -128,7 +128,7 @@ export default class Game extends Phaser.Scene {
     this.scene.stop("ui");
   }
 
-  private handleKnightSlimeCollision(
+  private handleKnightHitBySlime(
     obj1: Phaser.GameObjects.GameObject,
     obj2: Phaser.GameObjects.GameObject
   ) {
@@ -136,12 +136,12 @@ export default class Game extends Phaser.Scene {
     const dx = this.knight.x - slime.x;
     const dy = this.knight.y - slime.y;
     const dir = new Phaser.Math.Vector2(dx, dy).normalize().scale(200);
-    const slimeDmg = 10;
+    const dmg = 1;
 
-    this.knightController?.knightCollison(dir, slimeDmg);
+    sceneEvents.emit("knight-hit", dir, dmg);
   }
 
-  private handleSwordSlimeCollision(
+  private handleSlimeHitBySword(
     // slime : Phaser.Types.Physics.Arcade.SpriteWithDynamicBody,
     obj1: Phaser.GameObjects.GameObject,
     obj2: Phaser.GameObjects.GameObject
@@ -151,9 +151,7 @@ export default class Game extends Phaser.Scene {
     const dy = slime.y - this.knight.y;
     const dir = new Phaser.Math.Vector2(dx, dy).normalize().scale(100);
 
-    this.slimeControllers.forEach((slimeController) => {
-      slimeController.handleSlimeHit(dir, slime);
-    });
+    sceneEvents.emit("slime-hit", dir, slime);
   }
 
   update(t: number, dt: number) {

@@ -1,5 +1,6 @@
 import Phaser from "phaser";
 import StateMachine from "../statemachine/StateMachine";
+import { sceneEvents } from "~/events center/EventsCenter";
 
 export default class SlimeController {
   private scene: Phaser.Scene;
@@ -7,6 +8,7 @@ export default class SlimeController {
   private sprite: Phaser.Physics.Arcade.Sprite;
 
   private moveTime = 0;
+  private speed = 20;
   private hitPoints = 10;
 
   constructor(scene: Phaser.Scene, sprite: Phaser.Physics.Arcade.Sprite) {
@@ -46,15 +48,15 @@ export default class SlimeController {
       });
 
     this.stateMachine.setState("slime-idle");
-  }
 
-  destroy() {}
+    sceneEvents.on("slime-hit", this.handleSlimeHit, this);
+  }
 
   update(dt: number) {
     this.stateMachine.update(dt);
   }
 
-  handleSlimeHit(
+  private handleSlimeHit(
     dir: Phaser.Math.Vector2,
     slime: Phaser.Physics.Arcade.Sprite
   ) {
@@ -76,7 +78,7 @@ export default class SlimeController {
         if (this.hitPoints > 0) {
           this.stateMachine.setState("slime-idle");
         } else {
-          this.stateMachine.setState("slime-dead")
+          this.stateMachine.setState("slime-dead");
         }
       }
     );
@@ -84,7 +86,7 @@ export default class SlimeController {
 
   private slimeDeadEnter() {
     this.sprite.play("slime-hit");
-    this.sprite.disableBody()
+    this.sprite.disableBody();
   }
 
   private slimeIdleEnter() {
@@ -104,8 +106,6 @@ export default class SlimeController {
   private slimeRunEnter() {
     this.moveTime = 0;
   }
-
-  private speed = 20;
 
   private slimeRunUpUpdate(dt: number) {
     this.moveTime += dt;

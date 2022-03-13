@@ -1,6 +1,6 @@
 import Phaser from "phaser";
 import SlimeController from "./SlimeController";
-
+import { sceneEvents } from "~/events center/EventsCenter";
 import StateMachine from "../statemachine/StateMachine";
 
 export default class KnightController {
@@ -9,25 +9,24 @@ export default class KnightController {
   private cursors: Phaser.Types.Input.Keyboard.CursorKeys;
   private swordHitbox1: Phaser.Types.Physics.Arcade.ImageWithDynamicBody;
   private swordHitbox2: Phaser.Types.Physics.Arcade.ImageWithDynamicBody;
-  private slimeControllers: SlimeController[] = [];
+
   private stateMachine: StateMachine;
 
-  private hitPoints = 30;
+  private hitPoints = 5;
+  private speed = 90;
 
   constructor(
     scene: Phaser.Scene,
     sprite: Phaser.Physics.Arcade.Sprite,
     cursors: Phaser.Types.Input.Keyboard.CursorKeys,
     swordHitbox1: Phaser.Types.Physics.Arcade.ImageWithDynamicBody,
-    swordHitbox2: Phaser.Types.Physics.Arcade.ImageWithDynamicBody,
-    slimeControllers: SlimeController[] = []
+    swordHitbox2: Phaser.Types.Physics.Arcade.ImageWithDynamicBody
   ) {
     this.scene = scene;
     this.sprite = sprite;
     this.cursors = cursors;
     this.swordHitbox2 = swordHitbox1;
     this.swordHitbox1 = swordHitbox2;
-    this.slimeControllers = slimeControllers;
 
     this.sprite.setBodySize(this.sprite.width * 0.28, this.sprite.height * 0.4);
     this.sprite.body.offset.x = 28;
@@ -83,18 +82,24 @@ export default class KnightController {
       });
 
     this.stateMachine.setState("idle-down");
+
+    sceneEvents.on("knight-hit", this.handleKnightHit, this);
   }
 
   update(dt: number) {
     this.stateMachine.update(dt);
   }
 
-  knightCollison(dir: Phaser.Math.Vector2, dmg: number) {
-    this.hitPoints -= dmg;
-    console.log(this.hitPoints);
-    this.sprite.setVelocity(dir.x, dir.y);
-    this.swordHitbox2.body.enable = false;
+  private handleKnightHit(dir: Phaser.Math.Vector2, dmg: number) {
+    //swordHitbox disable if knight hitted during attack
     this.swordHitbox1.body.enable = false;
+    this.swordHitbox2.body.enable = false;
+
+    this.hitPoints -= dmg;
+    sceneEvents.emit("knight-hit-points-change", this.hitPoints);
+
+    this.sprite.setVelocity(dir.x, dir.y);
+
     if (this.hitPoints > 0) {
       this.stateMachine.setState("hit");
     } else {
@@ -191,8 +196,6 @@ export default class KnightController {
       this.stateMachine.setState("attack-left");
     }
   }
-
-  private speed = 120;
 
   private knightRunUpUpdate() {
     if (this.cursors.space.isDown) {
@@ -365,7 +368,7 @@ export default class KnightController {
         prefix: "Hooded knight_finalsheet-",
         suffix: ".png",
       }),
-      frameRate: 20,
+      frameRate: 15,
       repeat: -1,
     });
     this.sprite.anims.create({
@@ -376,7 +379,7 @@ export default class KnightController {
         prefix: "Hooded knight_finalsheet-",
         suffix: ".png",
       }),
-      frameRate: 20,
+      frameRate: 15,
       repeat: -1,
     });
     this.sprite.anims.create({
@@ -387,7 +390,7 @@ export default class KnightController {
         prefix: "Hooded knight_finalsheet-",
         suffix: ".png",
       }),
-      frameRate: 20,
+      frameRate: 15,
       repeat: -1,
     });
 
