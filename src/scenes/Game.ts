@@ -10,6 +10,7 @@ export default class Game extends Phaser.Scene {
   private cursors!: Phaser.Types.Input.Keyboard.CursorKeys;
   private swordHitbox1!: Phaser.Types.Physics.Arcade.ImageWithDynamicBody;
   private swordHitbox2!: Phaser.Types.Physics.Arcade.ImageWithDynamicBody;
+  private slimes?: Phaser.Physics.Arcade.Sprite[] = [];
   private slimeControllers: SlimeController[] = [];
 
   constructor() {
@@ -28,7 +29,7 @@ export default class Game extends Phaser.Scene {
     //anims
     Anims(this.anims);
 
-    //background and backwalls
+    //map
     const map = this.make.tilemap({ key: "map" });
     const tileset = map.addTilesetImage("tiles", "tiles_map");
     const wallsLayerFront = map.createLayer("WallsFront", tileset, 0, 0);
@@ -91,6 +92,7 @@ export default class Game extends Phaser.Scene {
         case "slime-spawn":
           //slime spawn
           const slime = this.physics.add.sprite(x, y, "slime");
+          this.slimes?.push(slime);
           this.slimeControllers.push(new SlimeController(this, slime));
 
           //slime coliders
@@ -121,7 +123,15 @@ export default class Game extends Phaser.Scene {
       }
     });
 
-    //front walls
+    //layers
+    const mapLayer = this.add.layer(wallsLayer);
+    const enemiesLayer = this.add.layer(this.slimes);
+    const playerLayer = this.add.layer(this.knight);
+    const frontLayer = this.add.layer( wallsLayerFront);
+    mapLayer.depth = 0;
+    enemiesLayer.depth = 1;
+    playerLayer.depth = 2;
+    frontLayer.depth = 3;
   }
 
   destroy() {
