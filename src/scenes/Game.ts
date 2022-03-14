@@ -5,13 +5,13 @@ import { sceneEvents } from "~/events center/EventsCenter";
 import KnightController from "~/controllers/KnightController";
 import SlimeController from "~/controllers/SlimeController";
 export default class Game extends Phaser.Scene {
+  private cursors!: Phaser.Types.Input.Keyboard.CursorKeys;
   private knight!: Phaser.Physics.Arcade.Sprite;
   private knightController?: KnightController;
-  private cursors!: Phaser.Types.Input.Keyboard.CursorKeys;
+  private slimes: Phaser.Physics.Arcade.Sprite[] = [];
+  private slimeControllers: SlimeController[] = [];
   private swordHitbox1!: Phaser.Types.Physics.Arcade.ImageWithDynamicBody;
   private swordHitbox2!: Phaser.Types.Physics.Arcade.ImageWithDynamicBody;
-  private slimes?: Phaser.Physics.Arcade.Sprite[] = [];
-  private slimeControllers: SlimeController[] = [];
 
   constructor() {
     super("game");
@@ -127,7 +127,7 @@ export default class Game extends Phaser.Scene {
     const mapLayer = this.add.layer(wallsLayer);
     const enemiesLayer = this.add.layer(this.slimes);
     const playerLayer = this.add.layer(this.knight);
-    const frontLayer = this.add.layer( wallsLayerFront);
+    const frontLayer = this.add.layer(wallsLayerFront);
     mapLayer.depth = 0;
     enemiesLayer.depth = 1;
     playerLayer.depth = 2;

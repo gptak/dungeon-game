@@ -1,7 +1,6 @@
 import Phaser from "phaser";
-import SlimeController from "./SlimeController";
-import { sceneEvents } from "~/events center/EventsCenter";
 import StateMachine from "../statemachine/StateMachine";
+import { sceneEvents } from "~/events center/EventsCenter";
 
 export default class KnightController {
   private scene: Phaser.Scene;
@@ -100,20 +99,23 @@ export default class KnightController {
 
     this.sprite.setVelocity(dir.x, dir.y);
 
-    if (this.hitPoints > 0) {
       this.stateMachine.setState("hit");
-    } else {
-      this.stateMachine.setState("dead");
-    }
+    
   }
 
   private knightHitEnter() {
     this.sprite.play("hit");
+    
 
     this.sprite.once(
       Phaser.Animations.Events.ANIMATION_COMPLETE_KEY + "hit",
       () => {
-        this.stateMachine.setState("idle-down");
+        
+        if (this.hitPoints > 0) {
+          this.stateMachine.setState("idle-down");
+        } else {
+          this.stateMachine.setState("dead");
+        }
       }
     );
   }
