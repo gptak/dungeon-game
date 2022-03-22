@@ -8,11 +8,11 @@ export default class KnightController {
   private cursors: Phaser.Types.Input.Keyboard.CursorKeys;
   private swordHitbox1: Phaser.Types.Physics.Arcade.ImageWithDynamicBody;
   private swordHitbox2: Phaser.Types.Physics.Arcade.ImageWithDynamicBody;
-
   private stateMachine: StateMachine;
 
-  private hitPoints = 5;
-  private speed = 90;
+  //knight consts
+  hitPoints = 5; //also need to be changed in UI to work properly
+  private speed = 100;
 
   constructor(
     scene: Phaser.Scene,
@@ -93,24 +93,17 @@ export default class KnightController {
     //swordHitbox disable if knight hitted during attack
     this.swordHitbox1.body.enable = false;
     this.swordHitbox2.body.enable = false;
-
     this.hitPoints -= dmg;
     sceneEvents.emit("knight-hit-points-change", this.hitPoints);
-
     this.sprite.setVelocity(dir.x, dir.y);
-
-      this.stateMachine.setState("hit");
-    
+    this.stateMachine.setState("hit");
   }
 
   private knightHitEnter() {
     this.sprite.play("hit");
-    
-
     this.sprite.once(
       Phaser.Animations.Events.ANIMATION_COMPLETE_KEY + "hit",
       () => {
-        
         if (this.hitPoints > 0) {
           this.stateMachine.setState("idle-down");
         } else {
@@ -327,6 +320,7 @@ export default class KnightController {
     );
   }
 
+  //animations
   private createAnimation() {
     this.sprite.anims.create({
       key: "idle-up",

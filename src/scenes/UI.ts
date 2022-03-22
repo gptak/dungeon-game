@@ -1,4 +1,5 @@
 import Phaser from "phaser";
+import KnightController from "~/controllers/KnightController";
 import { sceneEvents } from "~/events center/EventsCenter";
 
 export default class UI extends Phaser.Scene {
@@ -8,7 +9,7 @@ export default class UI extends Phaser.Scene {
   }
 
   create() {
-    const startingHearts = 5;
+    const startingHearts = 5; //also need to be changed in KnightController to work properly
 
     this.hearts = this.add.group({
       classType: Phaser.GameObjects.Image,

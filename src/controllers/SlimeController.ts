@@ -7,9 +7,10 @@ export default class SlimeController {
   private stateMachine: StateMachine;
   private sprite: Phaser.Physics.Arcade.Sprite;
 
+  //slime consts
   private moveTime = 0;
   private speed = 20;
-  private hitPoints = 10;
+  private hitPoints = 5;
 
   constructor(scene: Phaser.Scene, sprite: Phaser.Physics.Arcade.Sprite) {
     this.scene = scene;
@@ -72,6 +73,7 @@ export default class SlimeController {
 
   private slimeHitEnter() {
     this.sprite.play("slime-hit");
+    this.sprite.tint =  0xff0000
     this.sprite.once(
       Phaser.Animations.Events.ANIMATION_COMPLETE_KEY + "slime-hit",
       () => {
@@ -91,7 +93,7 @@ export default class SlimeController {
 
   private slimeIdleEnter() {
     const r = Phaser.Math.Between(1, 100);
-
+    this.sprite.tint =  0xffffff
     if (r <= 25) {
       this.stateMachine.setState("slime-run-right");
     } else if (r > 25 && r <= 50) {
@@ -216,7 +218,7 @@ export default class SlimeController {
         prefix: "Slime_Medium_Green-",
         suffix: ".png",
       }),
-      frameRate: 10,
+      frameRate: 15,
     });
   }
 }
