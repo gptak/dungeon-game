@@ -53,12 +53,12 @@ export default class Preloader extends Phaser.Scene {
       "assets/knight/attack_down.png",
       "assets/knight/attack_down.json"
     );
-    this.load.atlas("hit", "assets/knight/hit.png", "assets/knight/hit.json");
     this.load.atlas(
       "dead",
       "assets/knight/dead.png",
       "assets/knight/dead.json"
     );
+    this.load.atlas("hit", "assets/knight/hit.png", "assets/knight/hit.json");
     this.load.atlas(
       "slime_run_up",
       "assets/slime/slime_run_up.png",
@@ -85,7 +85,6 @@ export default class Preloader extends Phaser.Scene {
   }
 
   create() {
-  
     this.scene.start("game");
   }
 }

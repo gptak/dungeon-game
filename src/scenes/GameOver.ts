@@ -7,6 +7,7 @@ export default class GameOver extends Phaser.Scene {
   }
 
   private mainText = "Game Over";
+  private secondaryText = "Click anywhere to play again";
 
   create() {
     const { width, height } = this.scale;
@@ -17,18 +18,16 @@ export default class GameOver extends Phaser.Scene {
         strokeThickness: 1,
       })
       .setOrigin(0.5, 0.5);
-
-    const button = this.add
-      .rectangle(width * 0.5, height * 0.6, 100, 50, 0xffffff)
-      .setInteractive()
-      .on(Phaser.Input.Events.GAMEOBJECT_POINTER_DOWN, () => {
-        this.scene.start("preloader");
-      });
-
     this.add
-      .text(button.x, button.y, "Play Again", {
-        color: "#000000",
+      .text(width * 0.5, height * 0.55, this.secondaryText, {
+        fontSize: "12px",
+        color: "#fff",
+        strokeThickness: 1,
       })
-      .setOrigin(0.5);
+      .setOrigin(0.5, 0.5);
+
+    this.input.on("pointerup", () => {
+      this.scene.start("preloader");
+    });
   }
 }

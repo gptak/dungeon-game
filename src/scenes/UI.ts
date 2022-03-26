@@ -9,7 +9,7 @@ export default class UI extends Phaser.Scene {
   }
 
   create() {
-    const startingHearts = 5; //also need to be changed in KnightController to work properly
+    const startingHearts = 5; //also need to be changed in controllers/KnightController to work properly
 
     this.hearts = this.add.group({
       classType: Phaser.GameObjects.Image,
@@ -29,7 +29,7 @@ export default class UI extends Phaser.Scene {
       "knight-hit-points-change",
       this.handleKnightHitPoints,
       this
-    ); 
+    );
 
     this.events.once(Phaser.Scenes.Events.SHUTDOWN, () => {
       sceneEvents.off("knight-hit-points-change");

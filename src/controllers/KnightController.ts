@@ -11,9 +11,8 @@ export default class KnightController {
   private stateMachine: StateMachine;
 
   //knight consts
-  private hitPoints = 5; //also need to be changed in UI to work properly
+  private hitPoints = 5; //also need to be changed in scenes/UI to work properly
   private speed = 100;
-  private time = new Date();
 
   constructor(
     scene: Phaser.Scene,
@@ -121,7 +120,12 @@ export default class KnightController {
     this.sprite.setVelocity(0, 0);
 
     sceneEvents.off("knight-hit", this.handleKnightHit, this);
-    this.scene.scene.start("game-over");
+
+    this.scene.cameras.main.fadeOut(2500, 0, 0, 0, () => {
+      setTimeout(() => {
+        this.scene.scene.start("game-over");
+      }, 2800);
+    });
   }
 
   private knightIdleUpEnter() {
@@ -338,6 +342,7 @@ export default class KnightController {
       frameRate: 5,
       repeat: -1,
     });
+
     this.sprite.anims.create({
       key: "idle-side",
       frames: this.sprite.anims.generateFrameNames("idle_side", {
@@ -349,6 +354,7 @@ export default class KnightController {
       frameRate: 5,
       repeat: -1,
     });
+
     this.sprite.anims.create({
       key: "idle-down",
       frames: this.sprite.anims.generateFrameNames("idle_down", {
@@ -372,6 +378,7 @@ export default class KnightController {
       frameRate: 15,
       repeat: -1,
     });
+
     this.sprite.anims.create({
       key: "run-side",
       frames: this.sprite.anims.generateFrameNames("run_side", {
@@ -383,6 +390,7 @@ export default class KnightController {
       frameRate: 15,
       repeat: -1,
     });
+
     this.sprite.anims.create({
       key: "run-down",
       frames: this.sprite.anims.generateFrameNames("run_down", {
