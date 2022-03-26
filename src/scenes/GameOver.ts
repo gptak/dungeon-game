@@ -1,4 +1,5 @@
 import Phaser from "phaser";
+import { sceneEvents } from "~/events center/EventsCenter";
 
 export default class GameOver extends Phaser.Scene {
   constructor() {
@@ -6,24 +7,28 @@ export default class GameOver extends Phaser.Scene {
   }
 
   private mainText = "Game Over";
-  private secondaryText = "Click anywhere to try again";
 
   create() {
     const { width, height } = this.scale;
     this.add
       .text(width * 0.5, height * 0.45, this.mainText, {
-        fontSize: "24px",
+        fontSize: "28px",
         color: "#fff",
         strokeThickness: 1,
       })
       .setOrigin(0.5, 0.5);
 
+    const button = this.add
+      .rectangle(width * 0.5, height * 0.6, 100, 50, 0xffffff)
+      .setInteractive()
+      .on(Phaser.Input.Events.GAMEOBJECT_POINTER_DOWN, () => {
+        this.scene.start("game");
+      });
+
     this.add
-      .text(width * 0.5, height * 0.55, this.secondaryText, {
-        fontSize: "12px",
-        color: "#fff",
-        strokeThickness: 1,
+      .text(button.x, button.y, "Play Again", {
+        color: "#000000",
       })
-      .setOrigin(0.5, 0.5);
+      .setOrigin(0.5);
   }
 }

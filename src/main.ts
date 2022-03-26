@@ -7,13 +7,13 @@ import GameOver from "./scenes/GameOver";
 
 const config: Phaser.Types.Core.GameConfig = {
   type: Phaser.AUTO,
-  width: 400,
-  height: 300,
+  width: 600,
+  height: 400,
   physics: {
     default: "arcade",
     arcade: {
       gravity: { y: 0 },
-      // debug: true
+      debug: true
     },
   },
   scene: [Preloader, Game, UI, GameOver],

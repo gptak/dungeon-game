@@ -90,12 +90,14 @@ export default class KnightController {
   }
 
   private handleKnightHit(dir: Phaser.Math.Vector2, dmg: number) {
-    //swordHitbox disable if knight hitted during attack
+    // swordHitbox disable if knight hitted during attack
+
+    console.log(this);
     this.swordHitbox1.body.enable = false;
     this.swordHitbox2.body.enable = false;
     this.hitPoints -= dmg;
-    sceneEvents.emit("knight-hit-points-change", this.hitPoints);
     this.sprite.setVelocity(dir.x, dir.y);
+    sceneEvents.emit("knight-hit-points-change", this.hitPoints);
     this.stateMachine.setState("hit");
   }
 
@@ -118,7 +120,7 @@ export default class KnightController {
     this.sprite.disableBody();
     this.sprite.setVelocity(0, 0);
 
-    sceneEvents.emit("game-over");
+    this.scene.scene.start("game-over");
   }
 
   private knightIdleUpEnter() {

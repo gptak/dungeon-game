@@ -1,5 +1,4 @@
 import Phaser from "phaser";
-import { Anims } from "~/anims/Anims";
 import { sceneEvents } from "~/events center/EventsCenter";
 
 import KnightController from "~/controllers/KnightController";
@@ -20,14 +19,20 @@ export default class Game extends Phaser.Scene {
   init() {
     this.cursors = this.input.keyboard.createCursorKeys();
     this.slimeControllers = [];
+    this.slimes = [];
+
+    this.events.once(Phaser.Scenes.Events.SHUTDOWN, () => {
+      this.destroy();
+    });
+  }
+
+  destroy() {
+    this.scene.stop("ui");
   }
 
   create() {
     //ui
-    this.scene.launch("UI");
-
-    //anims
-    Anims(this.anims);
+    this.scene.launch("ui");
 
     //map
     const map = this.make.tilemap({ key: "map" });
@@ -132,9 +137,6 @@ export default class Game extends Phaser.Scene {
     enemiesLayer.depth = 1;
     playerLayer.depth = 2;
     frontLayer.depth = 3;
-
-    //game events
-    sceneEvents.on("game-over", this.gameOver, this);
   }
 
   private handleKnightHitBySlime(
@@ -162,12 +164,7 @@ export default class Game extends Phaser.Scene {
     sceneEvents.emit("slime-hit", dir, slime);
   }
 
-  private gameOver() {
-    setTimeout(() => {
-      this.scene.start("game-over");
-      this.scene.remove("UI");
-    }, 2000);
-  }
+  private gameOver() {}
 
   update(t: number, dt: number) {
     this.knightController?.update(dt);

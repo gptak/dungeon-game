@@ -5,7 +5,7 @@ import { sceneEvents } from "~/events center/EventsCenter";
 export default class UI extends Phaser.Scene {
   private hearts!: Phaser.GameObjects.Group;
   constructor() {
-    super("UI");
+    super("ui");
   }
 
   create() {
@@ -29,7 +29,7 @@ export default class UI extends Phaser.Scene {
       "knight-hit-points-change",
       this.handleKnightHitPoints,
       this
-    );
+    ); 
 
     this.events.once(Phaser.Scenes.Events.SHUTDOWN, () => {
       sceneEvents.off("knight-hit-points-change");
