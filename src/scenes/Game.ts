@@ -93,6 +93,7 @@ export default class Game extends Phaser.Scene {
 
           //camera
           this.cameras.main.startFollow(this.knight, true);
+          this.cameras.main.fadeIn()
           break;
 
         //slime spawn

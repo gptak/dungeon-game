@@ -121,10 +121,10 @@ export default class KnightController {
 
     sceneEvents.off("knight-hit", this.handleKnightHit, this);
 
-    this.scene.cameras.main.fadeOut(2500, 0, 0, 0, () => {
-      setTimeout(() => {
+    this.scene.cameras.main.fadeOut(1500, 0, 0, 0, () => {
+      this.scene.time.delayedCall(1800, () => {
         this.scene.scene.start("game-over");
-      }, 2800);
+      });
     });
   }
 
@@ -253,9 +253,9 @@ export default class KnightController {
     this.sprite.play("attack-up");
     this.swordHitbox1.x = this.sprite.x;
     this.swordHitbox1.y = this.sprite.y - 8;
-    setTimeout(() => {
+    this.scene.time.delayedCall(50, () => {
       this.scene.physics.world.add(this.swordHitbox1.body);
-    }, 50);
+    });
 
     this.sprite.once(
       Phaser.Animations.Events.ANIMATION_COMPLETE_KEY + "attack-up",
@@ -273,9 +273,9 @@ export default class KnightController {
     this.sprite.play("attack-down");
     this.swordHitbox1.x = this.sprite.x;
     this.swordHitbox1.y = this.sprite.y + 10;
-    setTimeout(() => {
+    this.scene.time.delayedCall(50, () => {
       this.scene.physics.world.add(this.swordHitbox1.body);
-    }, 50);
+    });
 
     this.sprite.once(
       Phaser.Animations.Events.ANIMATION_COMPLETE_KEY + "attack-down",
@@ -294,9 +294,9 @@ export default class KnightController {
     this.swordHitbox2.x = this.sprite.x + 10;
     this.swordHitbox2.y = this.sprite.y + 3;
     this.sprite.flipX = false;
-    setTimeout(() => {
+    this.scene.time.delayedCall(50, () => {
       this.scene.physics.world.add(this.swordHitbox2.body);
-    }, 50);
+    });
 
     this.sprite.once(
       Phaser.Animations.Events.ANIMATION_COMPLETE_KEY + "attack-side",
@@ -315,9 +315,9 @@ export default class KnightController {
     this.swordHitbox2.x = this.sprite.x - 10;
     this.swordHitbox2.y = this.sprite.y + 3;
     this.sprite.flipX = true;
-    setTimeout(() => {
+    this.scene.time.delayedCall(50, () => {
       this.scene.physics.world.add(this.swordHitbox2.body);
-    }, 50);
+    });
 
     this.sprite.once(
       Phaser.Animations.Events.ANIMATION_COMPLETE_KEY + "attack-side",

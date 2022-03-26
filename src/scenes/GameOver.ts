@@ -26,8 +26,8 @@ export default class GameOver extends Phaser.Scene {
       })
       .setOrigin(0.5, 0.5);
 
-    this.input.on("pointerup", () => {
-      this.scene.start("preloader");
+    this.input.on("pointerdown", () => {
+      this.scene.start("game");
     });
   }
 }

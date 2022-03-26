@@ -90,6 +90,7 @@ export default class SlimeController {
   private slimeDeadEnter() {
     this.sprite.play("slime-hit");
     this.sprite.disableBody();
+    sceneEvents.off("slime-hit", this.handleSlimeHit, this);
   }
 
   private slimeIdleEnter() {
