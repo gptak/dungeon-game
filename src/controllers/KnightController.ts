@@ -13,6 +13,7 @@ export default class KnightController {
   //knight consts
   private hitPoints = 5; //also need to be changed in UI to work properly
   private speed = 100;
+  private time = new Date();
 
   constructor(
     scene: Phaser.Scene,
@@ -92,7 +93,6 @@ export default class KnightController {
   private handleKnightHit(dir: Phaser.Math.Vector2, dmg: number) {
     // swordHitbox disable if knight hitted during attack
 
-    console.log(this);
     this.swordHitbox1.body.enable = false;
     this.swordHitbox2.body.enable = false;
     this.hitPoints -= dmg;
@@ -120,6 +120,7 @@ export default class KnightController {
     this.sprite.disableBody();
     this.sprite.setVelocity(0, 0);
 
+    sceneEvents.off("knight-hit", this.handleKnightHit, this);
     this.scene.scene.start("game-over");
   }
 

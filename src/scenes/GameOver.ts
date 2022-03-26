@@ -22,7 +22,7 @@ export default class GameOver extends Phaser.Scene {
       .rectangle(width * 0.5, height * 0.6, 100, 50, 0xffffff)
       .setInteractive()
       .on(Phaser.Input.Events.GAMEOBJECT_POINTER_DOWN, () => {
-        this.scene.start("game");
+        this.scene.start("preloader");
       });
 
     this.add

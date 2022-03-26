@@ -6,7 +6,7 @@ import SlimeController from "~/controllers/SlimeController";
 export default class Game extends Phaser.Scene {
   private cursors!: Phaser.Types.Input.Keyboard.CursorKeys;
   private knight!: Phaser.Physics.Arcade.Sprite;
-  private knightController?: KnightController;
+  private knightController!: KnightController;
   private slimes: Phaser.Physics.Arcade.Sprite[] = [];
   private slimeControllers: SlimeController[] = [];
   private swordHitbox1!: Phaser.Types.Physics.Arcade.ImageWithDynamicBody;
@@ -28,6 +28,7 @@ export default class Game extends Phaser.Scene {
 
   destroy() {
     this.scene.stop("ui");
+    
   }
 
   create() {
@@ -75,8 +76,8 @@ export default class Game extends Phaser.Scene {
       const { x = 0, y = 0, name, width = 0, height = 0 } = objData;
 
       switch (name) {
+        //knight spawn
         case "knight-spawn":
-          //knight spawn
           this.knight = this.physics.add.sprite(x, y, "knight");
           this.knightController = new KnightController(
             this,
@@ -94,8 +95,8 @@ export default class Game extends Phaser.Scene {
           this.cameras.main.startFollow(this.knight, true);
           break;
 
+        //slime spawn
         case "slime-spawn":
-          //slime spawn
           const slime = this.physics.add.sprite(x, y, "slime");
           this.slimes?.push(slime);
           this.slimeControllers.push(new SlimeController(this, slime));
@@ -126,6 +127,8 @@ export default class Game extends Phaser.Scene {
           this.physics.add.collider(slime, wallsLayerFront);
           break;
       }
+
+      console.log(this);
     });
 
     //layers
@@ -163,8 +166,6 @@ export default class Game extends Phaser.Scene {
 
     sceneEvents.emit("slime-hit", dir, slime);
   }
-
-  private gameOver() {}
 
   update(t: number, dt: number) {
     this.knightController?.update(dt);
