@@ -66,22 +66,23 @@ export default class SlimeController {
       this.stateMachine.setState("slime-hit");
       this.hitPoints--;
       console.log(this.hitPoints);
-    } else {
       return;
     }
+    return;
   }
 
   private slimeHitEnter() {
     this.sprite.play("slime-hit");
-    this.sprite.tint =  0xff0000
+    this.sprite.tint = 0xff0000;
     this.sprite.once(
       Phaser.Animations.Events.ANIMATION_COMPLETE_KEY + "slime-hit",
       () => {
         if (this.hitPoints > 0) {
           this.stateMachine.setState("slime-idle");
-        } else {
-          this.stateMachine.setState("slime-dead");
+          return;
         }
+
+        this.stateMachine.setState("slime-dead");
       }
     );
   }
@@ -93,7 +94,7 @@ export default class SlimeController {
 
   private slimeIdleEnter() {
     const r = Phaser.Math.Between(1, 100);
-    this.sprite.tint =  0xffffff
+    this.sprite.tint = 0xffffff;
     if (r <= 25) {
       this.stateMachine.setState("slime-run-right");
     } else if (r > 25 && r <= 50) {

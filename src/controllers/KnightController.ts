@@ -11,7 +11,7 @@ export default class KnightController {
   private stateMachine: StateMachine;
 
   //knight consts
-  hitPoints = 5; //also need to be changed in UI to work properly
+  private hitPoints = 5; //also need to be changed in UI to work properly
   private speed = 100;
 
   constructor(
@@ -106,9 +106,9 @@ export default class KnightController {
       () => {
         if (this.hitPoints > 0) {
           this.stateMachine.setState("idle-down");
-        } else {
-          this.stateMachine.setState("dead");
+          return;
         }
+        this.stateMachine.setState("dead");
       }
     );
   }
@@ -117,6 +117,8 @@ export default class KnightController {
     this.sprite.play("dead");
     this.sprite.disableBody();
     this.sprite.setVelocity(0, 0);
+
+    sceneEvents.emit("game-over");
   }
 
   private knightIdleUpEnter() {

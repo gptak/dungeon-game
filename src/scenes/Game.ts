@@ -132,10 +132,9 @@ export default class Game extends Phaser.Scene {
     enemiesLayer.depth = 1;
     playerLayer.depth = 2;
     frontLayer.depth = 3;
-  }
 
-  destroy() {
-    this.scene.stop("ui");
+    //game events
+    sceneEvents.on("game-over", this.gameOver, this);
   }
 
   private handleKnightHitBySlime(
@@ -152,7 +151,6 @@ export default class Game extends Phaser.Scene {
   }
 
   private handleSlimeHitBySword(
-    // slime : Phaser.Types.Physics.Arcade.SpriteWithDynamicBody,
     obj1: Phaser.GameObjects.GameObject,
     obj2: Phaser.GameObjects.GameObject
   ) {
@@ -162,6 +160,13 @@ export default class Game extends Phaser.Scene {
     const dir = new Phaser.Math.Vector2(dx, dy).normalize().scale(100);
 
     sceneEvents.emit("slime-hit", dir, slime);
+  }
+
+  private gameOver() {
+    setTimeout(() => {
+      this.scene.start("game-over");
+      this.scene.remove("UI");
+    }, 2000);
   }
 
   update(t: number, dt: number) {
