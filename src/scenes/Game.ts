@@ -28,7 +28,6 @@ export default class Game extends Phaser.Scene {
 
   destroy() {
     this.scene.stop("ui");
-    
   }
 
   create() {
@@ -93,7 +92,7 @@ export default class Game extends Phaser.Scene {
 
           //camera
           this.cameras.main.startFollow(this.knight, true);
-          this.cameras.main.fadeIn()
+          this.cameras.main.fadeIn();
           break;
 
         //slime spawn
@@ -128,8 +127,6 @@ export default class Game extends Phaser.Scene {
           this.physics.add.collider(slime, wallsLayerFront);
           break;
       }
-
-      console.log(this);
     });
 
     //layers

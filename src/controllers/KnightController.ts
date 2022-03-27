@@ -10,8 +10,9 @@ export default class KnightController {
   private swordHitbox2: Phaser.Types.Physics.Arcade.ImageWithDynamicBody;
   private stateMachine: StateMachine;
 
-  //knight consts
+  //knight stats
   private hitPoints = 5; //also need to be changed in scenes/UI to work properly
+  private gold = 0;
   private speed = 100;
 
   constructor(
@@ -82,11 +83,20 @@ export default class KnightController {
 
     this.stateMachine.setState("idle-down");
 
+    //events listeners
     sceneEvents.on("knight-hit", this.handleKnightHit, this);
+    sceneEvents.on("mob-dead", this.handleKnightGold, this);
   }
 
   update(dt: number) {
     this.stateMachine.update(dt);
+  }
+
+  //events handlers
+  private handleKnightGold(gold) {
+    this.gold += gold;
+    console.log(this.gold);
+    sceneEvents.emit("knight-gold-change", this.gold);
   }
 
   private handleKnightHit(dir: Phaser.Math.Vector2, dmg: number) {
@@ -98,6 +108,23 @@ export default class KnightController {
     this.sprite.setVelocity(dir.x, dir.y);
     sceneEvents.emit("knight-hit-points-change", this.hitPoints);
     this.stateMachine.setState("hit");
+  }
+
+  //state handlers
+  private knightDeadEnter() {
+    this.sprite.play("dead");
+    this.sprite.disableBody();
+    this.sprite.setVelocity(0, 0);
+
+    //events listeners switch off on dead
+    sceneEvents.off("knight-hit", this.handleKnightHit, this);
+    sceneEvents.off("mob-dead", this.handleKnightGold, this);
+
+    this.scene.cameras.main.fadeOut(1500, 0, 0, 0, () => {
+      this.scene.time.delayedCall(1800, () => {
+        this.scene.scene.start("game-over");
+      });
+    });
   }
 
   private knightHitEnter() {
@@ -112,20 +139,6 @@ export default class KnightController {
         this.stateMachine.setState("dead");
       }
     );
-  }
-
-  private knightDeadEnter() {
-    this.sprite.play("dead");
-    this.sprite.disableBody();
-    this.sprite.setVelocity(0, 0);
-
-    sceneEvents.off("knight-hit", this.handleKnightHit, this);
-
-    this.scene.cameras.main.fadeOut(1500, 0, 0, 0, () => {
-      this.scene.time.delayedCall(1800, () => {
-        this.scene.scene.start("game-over");
-      });
-    });
   }
 
   private knightIdleUpEnter() {

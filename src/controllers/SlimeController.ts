@@ -7,10 +7,12 @@ export default class SlimeController {
   private stateMachine: StateMachine;
   private sprite: Phaser.Physics.Arcade.Sprite;
 
-  //slime consts
+  //slime stats
   private moveTime = 0;
   private speed = 20;
   private hitPoints = 5;
+  private gold = Math.floor(Math.random() * 4 + 1);
+  private exp = 100;
 
   constructor(scene: Phaser.Scene, sprite: Phaser.Physics.Arcade.Sprite) {
     this.scene = scene;
@@ -65,7 +67,6 @@ export default class SlimeController {
       this.sprite.setVelocity(dir.x, dir.y);
       this.stateMachine.setState("slime-hit");
       this.hitPoints--;
-      console.log(this.hitPoints);
       return;
     }
     return;
@@ -90,6 +91,7 @@ export default class SlimeController {
   private slimeDeadEnter() {
     this.sprite.play("slime-hit");
     this.sprite.disableBody();
+    sceneEvents.emit("mob-dead", this.gold, this.exp);
     sceneEvents.off("slime-hit", this.handleSlimeHit, this);
   }
 
