@@ -1,13 +1,15 @@
 import Phaser from "phaser";
+import { sceneEvents } from "~/events center/EventsCenter";
 
 export default class GameOver extends Phaser.Scene {
   constructor() {
     super("game-over");
   }
+  
 
   create() {
     const mainText = "Game Over";
-    const secondaryText = "Click anywhere to play again";
+    const secondaryText = "Click to play again";
 
     const { width, height } = this.scale;
     this.add
@@ -27,6 +29,7 @@ export default class GameOver extends Phaser.Scene {
 
     this.input.on("pointerdown", () => {
       this.scene.start("game");
+      sceneEvents.emit("restart")
     });
   }
 }

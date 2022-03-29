@@ -3,36 +3,36 @@ import { sceneEvents } from "~/events center/EventsCenter";
 
 import KnightController from "~/controllers/KnightController";
 import SlimeController from "~/controllers/SlimeController";
-import Level2 from "./Level2";
-export default class Game extends Phaser.Scene {
+export default class Level2 extends Phaser.Scene {
   private cursors!: Phaser.Types.Input.Keyboard.CursorKeys;
   private knight!: Phaser.Physics.Arcade.Sprite;
-  private knightController?: KnightController;
+  private knightController!: KnightController;
   private slimes: Phaser.Physics.Arcade.Sprite[] = [];
   private slimeControllers: SlimeController[] = [];
-  private door!: Phaser.Physics.Arcade.Sprite;
   private swordHitbox1!: Phaser.Types.Physics.Arcade.ImageWithDynamicBody;
   private swordHitbox2!: Phaser.Types.Physics.Arcade.ImageWithDynamicBody;
 
   constructor() {
-    super("game");
+    super("level2");
   }
 
   init() {
     this.cursors = this.input.keyboard.createCursorKeys();
     this.slimeControllers = [];
     this.slimes = [];
+
     this.events.once(Phaser.Scenes.Events.SHUTDOWN, () => {
       this.destroy();
     });
   }
 
   destroy() {
-    
+   
   }
 
   create() {
-  
+    
+    this.scene.moveBelow("ui");
     //map
     const map = this.make.tilemap({ key: "map" });
     const tileset = map.addTilesetImage("tiles", "tiles_map");
@@ -127,22 +127,6 @@ export default class Game extends Phaser.Scene {
           break;
       }
     });
-
-    console.log(this.scene);
-
-    this.door = this.physics.add.sprite(200, 1505, "door");
-    this.physics.add.collider(
-      this.knight,
-      this.door,
-      () => {
-        console.log(this.knightController);
-        this.scene.pause("ui");
-        this.scene.start("level2");
-        sceneEvents.emit("knight-door-passing");
-      },
-      undefined,
-      this
-    );
 
     //layers
     const mapLayer = this.add.layer(wallsLayer);

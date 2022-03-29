@@ -4,12 +4,15 @@ import { sceneEvents } from "~/events center/EventsCenter";
 export default class UI extends Phaser.Scene {
   private hearts!: Phaser.GameObjects.Group;
 
+  private hitPoints = 5;
+  private gold = 0;
+
   constructor() {
     super("ui");
   }
 
   create() {
-    const startingHearts = 5; //also need to be changed in controllers/KnightController to work properly
+    const startingHearts = 5;
     this.hearts = this.add.group({
       classType: Phaser.GameObjects.Image,
     });
@@ -29,34 +32,56 @@ export default class UI extends Phaser.Scene {
       quantity: startingHearts,
     });
 
+    //events listeners
+    sceneEvents.on("knight-hit", this.handleKnightHitPoints, this);
+
     sceneEvents.on(
-      "knight-hit-points-change",
-      this.handleKnightHitPoints,
+      "mob-dead",
+      (gold: number) => {
+        this.gold += gold;
+        goldLabel.text = this.gold.toString();
+      },
       this
     );
 
     sceneEvents.on(
-      "knight-gold-change",
-      (gold: number) => {
-        goldLabel.text = gold.toString();
+      "restart",
+      () => {
+        this.hitPoints = 5;
+        this.gold = 0;
+        this.hearts.children.each((image) => {
+          const heart = image as Phaser.GameObjects.Image;
+          heart.setTexture("ui_heart_full");
+        });
       },
       this
     );
 
     this.events.once(Phaser.Scenes.Events.SHUTDOWN, () => {
       sceneEvents.off("knight-hit-points-change");
-      sceneEvents.off("knight-gold-change");
+      sceneEvents.off("mob-dead");
     });
   }
 
-  private handleKnightHitPoints(hitPoints: number) {
+  //events handlers
+  private handleKnightHitPoints(dir: Phaser.Math.Vector2, dmg: number) {
+    this.hitPoints = this.hitPoints - dmg;
+    console.log(this.hitPoints);
+
     this.hearts.children.each((image, index) => {
+      console.log("sprawdzam");
       const heart = image as Phaser.GameObjects.Image;
-      if (index < hitPoints) {
+      if (index < this.hitPoints) {
         heart.setTexture("ui_heart_full");
       } else {
         heart.setTexture("ui_heart_empty");
       }
     });
+
+    if (this.hitPoints > 0) {
+      sceneEvents.emit("knight-hitted", dir);
+    } else {
+      sceneEvents.emit("knight-dead");
+    }
   }
 }
