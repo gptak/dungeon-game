@@ -4,7 +4,7 @@ import { sceneEvents } from "~/events center/EventsCenter";
 import KnightController from "~/controllers/KnightController";
 import SlimeController from "~/controllers/SlimeController";
 import Level2 from "./Level2";
-export default class Game extends Phaser.Scene {
+export default class Level1 extends Phaser.Scene {
   private cursors!: Phaser.Types.Input.Keyboard.CursorKeys;
   private knight!: Phaser.Physics.Arcade.Sprite;
   private knightController?: KnightController;

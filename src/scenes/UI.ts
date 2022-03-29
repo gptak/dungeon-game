@@ -52,6 +52,7 @@ export default class UI extends Phaser.Scene {
         this.hearts.children.each((image) => {
           const heart = image as Phaser.GameObjects.Image;
           heart.setTexture("ui_heart_full");
+          goldLabel.text = this.gold.toString();
         });
       },
       this
