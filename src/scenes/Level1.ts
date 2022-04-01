@@ -3,12 +3,14 @@ import { sceneEvents } from "~/events center/EventsCenter";
 
 import KnightController from "~/controllers/KnightController";
 import SlimeController from "~/controllers/SlimeController";
-export default class Game extends Phaser.Scene {
+import Level2 from "./Level2";
+export default class Level1 extends Phaser.Scene {
   private cursors!: Phaser.Types.Input.Keyboard.CursorKeys;
   private knight!: Phaser.Physics.Arcade.Sprite;
-  private knightController!: KnightController;
+  private knightController?: KnightController;
   private slimes: Phaser.Physics.Arcade.Sprite[] = [];
   private slimeControllers: SlimeController[] = [];
+  private door!: Phaser.Physics.Arcade.Sprite;
   private swordHitbox1!: Phaser.Types.Physics.Arcade.ImageWithDynamicBody;
   private swordHitbox2!: Phaser.Types.Physics.Arcade.ImageWithDynamicBody;
 
@@ -20,22 +22,16 @@ export default class Game extends Phaser.Scene {
     this.cursors = this.input.keyboard.createCursorKeys();
     this.slimeControllers = [];
     this.slimes = [];
-
     this.events.once(Phaser.Scenes.Events.SHUTDOWN, () => {
       this.destroy();
     });
   }
 
-  destroy() {
-    this.scene.stop("ui");
-  }
+  destroy() {}
 
   create() {
-    //ui
-    this.scene.launch("ui");
-
     //map
-    const map = this.make.tilemap({ key: "map" });
+    const map = this.make.tilemap({ key: "level1" });
     const tileset = map.addTilesetImage("tiles", "tiles_map");
     const wallsLayerFront = map.createLayer("WallsFront", tileset, 0, 0);
     map.createLayer("Floor", tileset, 0, 0);
@@ -125,6 +121,22 @@ export default class Game extends Phaser.Scene {
           );
           this.physics.add.collider(slime, wallsLayer);
           this.physics.add.collider(slime, wallsLayerFront);
+          break;
+
+        case "door-1->2":
+          this.door = this.physics.add.sprite(x, y, "door");
+          this.physics.add.collider(
+            this.knight,
+            this.door,
+            () => {
+              console.log(this.knightController);
+              this.scene.pause("ui");
+              this.scene.start("level2");
+              sceneEvents.emit("knight-door-passing");
+            },
+            undefined,
+            this
+          );
           break;
       }
     });

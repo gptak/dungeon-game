@@ -10,9 +10,7 @@ export default class KnightController {
   private swordHitbox2: Phaser.Types.Physics.Arcade.ImageWithDynamicBody;
   private stateMachine: StateMachine;
 
-  //knight stats
-  private hitPoints = 5; //also need to be changed in scenes/UI to work properly
-  private gold = 0;
+  //knight consts
   private speed = 100;
 
   constructor(
@@ -84,8 +82,10 @@ export default class KnightController {
     this.stateMachine.setState("idle-down");
 
     //events listeners
-    sceneEvents.on("knight-hit", this.handleKnightHit, this);
-    sceneEvents.on("mob-dead", this.handleKnightGold, this);
+
+    sceneEvents.on("knight-dead", this.handleDead, this);
+    sceneEvents.on("knight-hitted", this.handleKnightHit, this);
+    sceneEvents.on("knight-door-passing", this.handleDoor, this);
   }
 
   update(dt: number) {
@@ -93,21 +93,27 @@ export default class KnightController {
   }
 
   //events handlers
-  private handleKnightGold(gold) {
-    this.gold += gold;
-    console.log(this.gold);
-    sceneEvents.emit("knight-gold-change", this.gold);
-  }
-
-  private handleKnightHit(dir: Phaser.Math.Vector2, dmg: number) {
+  private handleKnightHit(dir: Phaser.Math.Vector2) {
     // swordHitbox disable if knight hitted during attack
-
     this.swordHitbox1.body.enable = false;
     this.swordHitbox2.body.enable = false;
-    this.hitPoints -= dmg;
+
     this.sprite.setVelocity(dir.x, dir.y);
-    sceneEvents.emit("knight-hit-points-change", this.hitPoints);
     this.stateMachine.setState("hit");
+  }
+
+  private handleDead() {
+    this.stateMachine.setState("dead");
+  }
+
+  private handleDoor() {
+    this.switchOffHandlers();
+  }
+
+  private switchOffHandlers() {
+    sceneEvents.off("knight-hitted", this.handleKnightHit, this);
+    sceneEvents.off("knight-dead", this.handleDead, this);
+    sceneEvents.off("knight-door-passing", this.handleDoor, this);
   }
 
   //state handlers
@@ -116,15 +122,14 @@ export default class KnightController {
     this.sprite.disableBody();
     this.sprite.setVelocity(0, 0);
 
-    //events listeners switch off on dead
-    sceneEvents.off("knight-hit", this.handleKnightHit, this);
-    sceneEvents.off("mob-dead", this.handleKnightGold, this);
-
     this.scene.cameras.main.fadeOut(1500, 0, 0, 0, () => {
       this.scene.time.delayedCall(1800, () => {
         this.scene.scene.start("game-over");
       });
     });
+
+    //events listeners switch off on dead
+    this.switchOffHandlers();
   }
 
   private knightHitEnter() {
@@ -132,11 +137,7 @@ export default class KnightController {
     this.sprite.once(
       Phaser.Animations.Events.ANIMATION_COMPLETE_KEY + "hit",
       () => {
-        if (this.hitPoints > 0) {
-          this.stateMachine.setState("idle-down");
-          return;
-        }
-        this.stateMachine.setState("dead");
+        this.stateMachine.setState("idle-down");
       }
     );
   }

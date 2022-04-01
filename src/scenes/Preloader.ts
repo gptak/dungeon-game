@@ -6,7 +6,8 @@ export default class Preloader extends Phaser.Scene {
   }
   preload() {
     this.load.image("tiles_map", "assets/tiles.png");
-    this.load.tilemapTiledJSON("map", "assets/dungeon.json");
+    this.load.tilemapTiledJSON("level1", "assets/level1.json");
+    this.load.tilemapTiledJSON("level2", "assets/level2.json");
 
     this.load.atlas(
       "idle_up",
@@ -86,5 +87,6 @@ export default class Preloader extends Phaser.Scene {
 
   create() {
     this.scene.start("game");
+    this.scene.launch("ui")
   }
 }

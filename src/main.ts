@@ -1,9 +1,10 @@
 import Phaser from "phaser";
 
 import Preloader from "./scenes/Preloader";
-import Game from "./scenes/Game";
+import Level1 from "./scenes/Level1";
 import UI from "./scenes/UI";
 import GameOver from "./scenes/GameOver";
+import Level2 from "./scenes/Level2";
 
 const config: Phaser.Types.Core.GameConfig = {
   type: Phaser.AUTO,
@@ -16,7 +17,7 @@ const config: Phaser.Types.Core.GameConfig = {
       // debug: true
     },
   },
-  scene: [Preloader, Game, UI, GameOver],
+  scene: [Preloader, Level1, UI, GameOver, Level2],
   scale: {
     zoom: 2,
   },
