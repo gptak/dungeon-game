@@ -24,33 +24,33 @@ export default class SlimeController {
     this.stateMachine = new StateMachine(this, "slime");
 
     this.stateMachine
-      .addState("slime-idle", {
+      .addState("idle", {
         onEnter: this.idleEnter,
       })
-      .addState("slime-run-up", {
+      .addState("run-up", {
         onEnter: this.runEnter,
         onUpdate: this.runUpUpdate,
       })
-      .addState("slime-run-down", {
+      .addState("run-down", {
         onEnter: this.runEnter,
         onUpdate: this.runDownUpdate,
       })
-      .addState("slime-run-left", {
+      .addState("run-left", {
         onEnter: this.runEnter,
         onUpdate: this.runLeftUpdate,
       })
-      .addState("slime-run-right", {
+      .addState("run-right", {
         onEnter: this.runEnter,
         onUpdate: this.runRightUpdate,
       })
-      .addState("slime-hit", {
+      .addState("hit", {
         onEnter: this.hitEnter,
       })
-      .addState("slime-dead", {
+      .addState("dead", {
         onEnter: this.deadEnter,
       });
 
-    this.stateMachine.setState("slime-idle");
+    this.stateMachine.setState("idle");
 
     sceneEvents.on("slime-hit", this.handleHit, this);
   }
@@ -65,7 +65,7 @@ export default class SlimeController {
   ) {
     if (slime === this.sprite && this.hitPoints >= 1) {
       this.sprite.setVelocity(dir.x, dir.y);
-      this.stateMachine.setState("slime-hit");
+      this.stateMachine.setState("hit");
       this.hitPoints--;
       return;
     }
@@ -79,11 +79,11 @@ export default class SlimeController {
       Phaser.Animations.Events.ANIMATION_COMPLETE_KEY + "slime-hit",
       () => {
         if (this.hitPoints > 0) {
-          this.stateMachine.setState("slime-idle");
+          this.stateMachine.setState("idle");
           return;
         }
 
-        this.stateMachine.setState("slime-dead");
+        this.stateMachine.setState("dead");
       }
     );
   }
@@ -99,15 +99,15 @@ export default class SlimeController {
     const r = Phaser.Math.Between(1, 100);
     this.sprite.tint = 0xffffff;
     if (r <= 25) {
-      this.stateMachine.setState("slime-run-right");
+      this.stateMachine.setState("run-right");
     } else if (r > 25 && r <= 50) {
-      this.stateMachine.setState("slime-run-up");
+      this.stateMachine.setState("run-up");
     } else if (r > 50 && r <= 75) {
-      this.stateMachine.setState("slime-run-left");
+      this.stateMachine.setState("run-left");
     } else if (r > 75) {
-      this.stateMachine.setState("slime-run-down");
+      this.stateMachine.setState("run-down");
     }
-  }
+   }
 
   private runEnter() {
     this.moveTime = 0;
@@ -117,14 +117,14 @@ export default class SlimeController {
     this.moveTime += dt;
     this.sprite.play("slime-run-up", true);
     this.sprite.setVelocity(0, -this.speed);
-    if (this.moveTime > Math.floor(Math.random() * 4000 + 6000)) {
+    if (this.moveTime > Math.floor(Math.random() * 5000 + 5000)) {
       const r = Phaser.Math.Between(1, 100);
       if (r <= 33) {
-        this.stateMachine.setState("slime-run-left");
+        this.stateMachine.setState("run-left");
       } else if (r > 33 && r <= 66) {
-        this.stateMachine.setState("slime-run-down");
+        this.stateMachine.setState("run-down");
       } else if (r > 100) {
-        this.stateMachine.setState("slime-run-right");
+        this.stateMachine.setState("run-right");
       }
     }
   }
@@ -134,14 +134,14 @@ export default class SlimeController {
     this.sprite.play("slime-run-down", true);
     this.sprite.setVelocity(0, this.speed);
 
-    if (this.moveTime > Math.floor(Math.random() * 6000 + 4000)) {
+    if (this.moveTime > Math.floor(Math.random() * 5000 + 5000)) {
       const r = Phaser.Math.Between(1, 100);
       if (r <= 33) {
-        this.stateMachine.setState("slime-run-right");
+        this.stateMachine.setState("run-right");
       } else if (r > 33 && r <= 66) {
-        this.stateMachine.setState("slime-run-up");
+        this.stateMachine.setState("run-up");
       } else if (r > 100) {
-        this.stateMachine.setState("slime-run-left");
+        this.stateMachine.setState("run-left");
       }
     }
   }
@@ -154,11 +154,11 @@ export default class SlimeController {
     if (this.moveTime > Math.floor(Math.random() * 5000 + 5000)) {
       const r = Phaser.Math.Between(1, 100);
       if (r <= 33) {
-        this.stateMachine.setState("slime-run-down");
+        this.stateMachine.setState("run-down");
       } else if (r > 33 && r <= 66) {
-        this.stateMachine.setState("slime-run-right");
+        this.stateMachine.setState("run-right");
       } else if (r > 100) {
-        this.stateMachine.setState("slime-run-up");
+        this.stateMachine.setState("run-up");
       }
     }
   }
@@ -171,11 +171,11 @@ export default class SlimeController {
     if (this.moveTime > Math.floor(Math.random() * 7000 + 3000)) {
       const r = Phaser.Math.Between(1, 100);
       if (r <= 33) {
-        this.stateMachine.setState("slime-run-up");
+        this.stateMachine.setState("run-up");
       } else if (r > 33 && r <= 66) {
-        this.stateMachine.setState("slime-run-left");
+        this.stateMachine.setState("run-left");
       } else if (r > 100) {
-        this.stateMachine.setState("slime-run-down");
+        this.stateMachine.setState("run-down");
       }
     }
   }

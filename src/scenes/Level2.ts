@@ -26,12 +26,9 @@ export default class Level2 extends Phaser.Scene {
     });
   }
 
-  destroy() {
-   
-  }
+  destroy() {}
 
   create() {
-    
     this.scene.moveBelow("ui");
     //map
     const map = this.make.tilemap({ key: "level2" });
@@ -98,7 +95,9 @@ export default class Level2 extends Phaser.Scene {
         case "shadow-spawn":
           const shadow = this.physics.add.sprite(x, y, "shadow");
           this.shadows?.push(shadow);
-          this.shadowsControllers.push(new ShadowController(this, shadow));
+          this.shadowsControllers.push(
+            new ShadowController(this, shadow, this.knight)
+          );
 
           //slime coliders
           this.physics.add.collider(
@@ -124,7 +123,7 @@ export default class Level2 extends Phaser.Scene {
             undefined,
             this
           );
-          
+
           this.physics.add.collider(shadow, wallsLayer);
           this.physics.add.collider(shadow, wallsLayerFront);
           break;
