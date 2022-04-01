@@ -3,7 +3,6 @@ import { sceneEvents } from "~/events center/EventsCenter";
 
 import KnightController from "~/controllers/KnightController";
 import SlimeController from "~/controllers/SlimeController";
-import Level2 from "./Level2";
 export default class Level1 extends Phaser.Scene {
   private cursors!: Phaser.Types.Input.Keyboard.CursorKeys;
   private knight!: Phaser.Physics.Arcade.Sprite;
@@ -130,8 +129,6 @@ export default class Level1 extends Phaser.Scene {
             this.knight,
             this.door,
             () => {
-              console.log(this.knightController);
-              this.scene.pause("ui");
               this.scene.start("level2");
               sceneEvents.emit("knight-door-passing");
             },

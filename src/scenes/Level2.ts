@@ -108,6 +108,7 @@ export default class Level2 extends Phaser.Scene {
             undefined,
             this
           );
+
           this.physics.add.overlap(
             this.swordHitbox1,
             slime,
@@ -115,6 +116,7 @@ export default class Level2 extends Phaser.Scene {
             undefined,
             this
           );
+
           this.physics.add.overlap(
             this.swordHitbox2,
             slime,
@@ -122,6 +124,7 @@ export default class Level2 extends Phaser.Scene {
             undefined,
             this
           );
+          
           this.physics.add.collider(slime, wallsLayer);
           this.physics.add.collider(slime, wallsLayerFront);
           break;
