@@ -80,13 +80,48 @@ export default class Preloader extends Phaser.Scene {
       "assets/slime/slime_hit.png",
       "assets/slime/slime_hit.json"
     );
+    this.load.atlas(
+      "shadow_run_up",
+      "assets/shadow/shadow_run_up.png",
+      "assets/shadow/shadow_run_up.json"
+    );
+    this.load.atlas(
+      "shadow_run_side",
+      "assets/shadow/shadow_run_side.png",
+      "assets/shadow/shadow_run_side.json"
+    );
+    this.load.atlas(
+      "shadow_run_down",
+      "assets/shadow/shadow_run_down.png",
+      "assets/shadow/shadow_run_down.json"
+    );
+    this.load.atlas(
+      "shadow_attack_up",
+      "assets/shadow/shadow_attack_up.png",
+      "assets/shadow/shadow_attack_up.json"
+    );
+    this.load.atlas(
+      "shadow_attack_side",
+      "assets/shadow/shadow_attack_side.png",
+      "assets/shadow/shadow_attack_side.json"
+    );
+    this.load.atlas(
+      "shadow_run_down",
+      "assets/shadow/shadow_attack_down.png",
+      "assets/shadow/shadow_attack_down.json"
+    );
+    this.load.atlas(
+      "shadow_hit",
+      "assets/shadow/shadow_hit.png",
+      "assets/shadow/shadow_hit.json"
+    );
 
     this.load.image("ui_heart_empty", "assets/ui_heart_empty.png");
     this.load.image("ui_heart_full", "assets/ui_heart_full.png");
   }
 
   create() {
-    this.scene.start("game");
+    this.scene.start("level2");
     this.scene.launch("ui")
   }
 }

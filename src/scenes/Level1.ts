@@ -14,7 +14,7 @@ export default class Level1 extends Phaser.Scene {
   private swordHitbox2!: Phaser.Types.Physics.Arcade.ImageWithDynamicBody;
 
   constructor() {
-    super("game");
+    super("level1");
   }
 
   init() {

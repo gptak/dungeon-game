@@ -1,0 +1,36 @@
+{"frames": [
+
+{
+	"filename": "06.png",
+	"frame": {"x":0,"y":0,"w":16,"h":32},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":16,"h":32},
+	"sourceSize": {"w":16,"h":32}
+},
+{
+	"filename": "07.png",
+	"frame": {"x":0,"y":32,"w":16,"h":32},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":16,"h":32},
+	"sourceSize": {"w":16,"h":32}
+},
+{
+	"filename": "08.png",
+	"frame": {"x":0,"y":64,"w":16,"h":32},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":16,"h":32},
+	"sourceSize": {"w":16,"h":32}
+}],
+"meta": {
+	"app": "https://www.codeandweb.com/texturepacker",
+	"version": "1.0",
+	"image": "shadow_run_side.png",
+	"format": "RGBA8888",
+	"size": {"w":16,"h":96},
+	"scale": "1",
+	"smartupdate": "$TexturePacker:SmartUpdate:f4429392d284a58a7652fcf6cbea29d3:568de2f51765cea80322be96c9a57e29:ff3c877fcfec8cfabb6e43bb48cbb726$"
+}
+}

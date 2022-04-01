@@ -5,7 +5,6 @@ export default class GameOver extends Phaser.Scene {
   constructor() {
     super("game-over");
   }
-  
 
   create() {
     const mainText = "Game Over";
@@ -29,7 +28,7 @@ export default class GameOver extends Phaser.Scene {
 
     this.input.on("pointerdown", () => {
       this.scene.start("game");
-      sceneEvents.emit("restart")
+      sceneEvents.emit("restart");
     });
   }
 }

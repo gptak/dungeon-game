@@ -1,0 +1,36 @@
+{"frames": [
+
+{
+	"filename": "12.png",
+	"frame": {"x":0,"y":0,"w":16,"h":32},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":16,"h":32},
+	"sourceSize": {"w":16,"h":32}
+},
+{
+	"filename": "13.png",
+	"frame": {"x":0,"y":32,"w":16,"h":32},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":16,"h":32},
+	"sourceSize": {"w":16,"h":32}
+},
+{
+	"filename": "14.png",
+	"frame": {"x":0,"y":64,"w":16,"h":32},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":16,"h":32},
+	"sourceSize": {"w":16,"h":32}
+}],
+"meta": {
+	"app": "https://www.codeandweb.com/texturepacker",
+	"version": "1.0",
+	"image": "shadow_attack_up.png",
+	"format": "RGBA8888",
+	"size": {"w":16,"h":96},
+	"scale": "1",
+	"smartupdate": "$TexturePacker:SmartUpdate:da43fbe2859d72520ca2602a554db534:877ee4099d7d145d9cf4e241a0bcb7f5:89416e8a99e6c3bc451a156fcdcb5d08$"
+}
+}

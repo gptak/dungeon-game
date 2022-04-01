@@ -2,13 +2,13 @@ import Phaser from "phaser";
 import { sceneEvents } from "~/events center/EventsCenter";
 
 import KnightController from "~/controllers/KnightController";
-import SlimeController from "~/controllers/SlimeController";
+import ShadowController from "~/controllers/ShadowController";
 export default class Level2 extends Phaser.Scene {
   private cursors!: Phaser.Types.Input.Keyboard.CursorKeys;
   private knight!: Phaser.Physics.Arcade.Sprite;
   private knightController!: KnightController;
-  private slimes: Phaser.Physics.Arcade.Sprite[] = [];
-  private slimeControllers: SlimeController[] = [];
+  private shadows: Phaser.Physics.Arcade.Sprite[] = [];
+  private shadowsControllers: ShadowController[] = [];
   private swordHitbox1!: Phaser.Types.Physics.Arcade.ImageWithDynamicBody;
   private swordHitbox2!: Phaser.Types.Physics.Arcade.ImageWithDynamicBody;
 
@@ -18,8 +18,8 @@ export default class Level2 extends Phaser.Scene {
 
   init() {
     this.cursors = this.input.keyboard.createCursorKeys();
-    this.slimeControllers = [];
-    this.slimes = [];
+    this.shadowsControllers = [];
+    this.shadows = [];
 
     this.events.once(Phaser.Scenes.Events.SHUTDOWN, () => {
       this.destroy();
@@ -95,15 +95,15 @@ export default class Level2 extends Phaser.Scene {
           break;
 
         //slime spawn
-        case "slime-spawn":
-          const slime = this.physics.add.sprite(x, y, "slime");
-          this.slimes?.push(slime);
-          this.slimeControllers.push(new SlimeController(this, slime));
+        case "shadow-spawn":
+          const shadow = this.physics.add.sprite(x, y, "shadow");
+          this.shadows?.push(shadow);
+          this.shadowsControllers.push(new ShadowController(this, shadow));
 
           //slime coliders
           this.physics.add.collider(
             this.knight,
-            slime,
+            shadow,
             this.handleKnightHitBySlime,
             undefined,
             this
@@ -111,29 +111,29 @@ export default class Level2 extends Phaser.Scene {
 
           this.physics.add.overlap(
             this.swordHitbox1,
-            slime,
-            this.handleSlimeHitBySword,
+            shadow,
+            this.handleShadowHitBySword,
             undefined,
             this
           );
 
           this.physics.add.overlap(
             this.swordHitbox2,
-            slime,
-            this.handleSlimeHitBySword,
+            shadow,
+            this.handleShadowHitBySword,
             undefined,
             this
           );
           
-          this.physics.add.collider(slime, wallsLayer);
-          this.physics.add.collider(slime, wallsLayerFront);
+          this.physics.add.collider(shadow, wallsLayer);
+          this.physics.add.collider(shadow, wallsLayerFront);
           break;
       }
     });
 
     //layers
     const mapLayer = this.add.layer(wallsLayer);
-    const enemiesLayer = this.add.layer(this.slimes);
+    const enemiesLayer = this.add.layer(this.shadows);
     const playerLayer = this.add.layer(this.knight);
     const frontLayer = this.add.layer(wallsLayerFront);
     mapLayer.depth = 0;
@@ -155,22 +155,22 @@ export default class Level2 extends Phaser.Scene {
     sceneEvents.emit("knight-hit", dir, dmg);
   }
 
-  private handleSlimeHitBySword(
+  private handleShadowHitBySword(
     obj1: Phaser.GameObjects.GameObject,
     obj2: Phaser.GameObjects.GameObject
   ) {
-    const slime = obj2 as Phaser.Physics.Arcade.Sprite;
-    const dx = slime.x - this.knight.x;
-    const dy = slime.y - this.knight.y;
+    const shadow = obj2 as Phaser.Physics.Arcade.Sprite;
+    const dx = shadow.x - this.knight.x;
+    const dy = shadow.y - this.knight.y;
     const dir = new Phaser.Math.Vector2(dx, dy).normalize().scale(100);
 
-    sceneEvents.emit("slime-hit", dir, slime);
+    sceneEvents.emit("shadow-hit", dir, shadow);
   }
 
   update(t: number, dt: number) {
     this.knightController?.update(dt);
-    this.slimeControllers.forEach((slimeController) =>
-      slimeController.update(dt)
+    this.shadowsControllers.forEach((shadowController) =>
+      shadowController.update(dt)
     );
   }
 }
