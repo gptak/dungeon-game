@@ -92,7 +92,6 @@ export default class ShadowController {
     const dx = this.knight.x - this.sprite.x;
     const dy = this.knight.y - this.sprite.y;
     const distance = new Phaser.Math.Vector2(dx, dy).length();
-    console.log(distance);
     return distance;
   }
 
@@ -121,29 +120,31 @@ export default class ShadowController {
   }
 
   private idleEnter() {
-    const r = Phaser.Math.Between(1, 100);
+    const r = Math.floor(Math.random() * 4);
     this.sprite.tint = 0xffffff;
-    if (r <= 25) {
+    if (r === 0) {
       this.stateMachine.setState("run-right");
-    } else if (r > 25 && r <= 50) {
+    } else if (r === 1) {
       this.stateMachine.setState("run-up");
-    } else if (r > 50 && r <= 75) {
+    } else if (r === 2) {
       this.stateMachine.setState("run-left");
-    } else if (r > 75) {
+    } else if (r === 3) {
       this.stateMachine.setState("run-down");
     }
   }
 
   private attackEnter() {
     console.log("teraz");
+    this.sprite.setVelocity(
+      (this.knight.x - this.sprite.x) ,
+      (this.knight.y - this.sprite.y)
+    );
   }
 
   private attackUpdate() {
-    this.sprite.play("shadow-run-side");
-    this.sprite.setVelocity(
-      this.knight.x - this.sprite.x,
-      this.knight.y - this.sprite.y
-    );
+    if (this.knightDistance() > this.triggerDistance) {
+      this.stateMachine.setState("idle");
+    }
   }
 
   private runEnter() {
@@ -154,13 +155,13 @@ export default class ShadowController {
     this.moveTime += dt;
     this.sprite.play("shadow-run-up", true);
     this.sprite.setVelocity(0, -this.speed);
-    if (this.moveTime > Math.floor(Math.random() * 4000 + 6000)) {
-      const r = Phaser.Math.Between(1, 100);
-      if (r <= 33) {
+    if (this.moveTime > Math.floor(Math.random() * 3000 + 3000)) {
+      const r = Math.floor(Math.random() * 3);
+      if (r === 0) {
         this.stateMachine.setState("run-left");
-      } else if (r > 33 && r <= 66) {
+      } else if (r === 1) {
         this.stateMachine.setState("run-down");
-      } else if (r > 100) {
+      } else if (r === 2) {
         this.stateMachine.setState("run-right");
       }
     }
@@ -174,14 +175,14 @@ export default class ShadowController {
     this.sprite.play("shadow-run-down", true);
     this.sprite.setVelocity(0, this.speed);
 
-    if (this.moveTime > Math.floor(Math.random() * 5000 + 5000)) {
-      const r = Phaser.Math.Between(1, 100);
-      if (r <= 33) {
-        this.stateMachine.setState("run-right");
-      } else if (r > 33 && r <= 66) {
-        this.stateMachine.setState("run-up");
-      } else if (r > 100) {
+    if (this.moveTime > Math.floor(Math.random() * 3000 + 3000)) {
+      const r = Math.floor(Math.random() * 3);
+      if (r === 0) {
         this.stateMachine.setState("run-left");
+      } else if (r === 1) {
+        this.stateMachine.setState("run-down");
+      } else if (r === 2) {
+        this.stateMachine.setState("run-right");
       }
     }
     if (this.knightDistance() < this.triggerDistance) {
@@ -194,14 +195,14 @@ export default class ShadowController {
     this.sprite.play("shadow-run-side", true);
     this.sprite.setVelocity(-this.speed, 0);
     this.sprite.flipX = false;
-    if (this.moveTime > Math.floor(Math.random() * 5000 + 5000)) {
-      const r = Phaser.Math.Between(1, 100);
-      if (r <= 33) {
+    if (this.moveTime > Math.floor(Math.random() * 3000 + 3000)) {
+      const r = Math.floor(Math.random() * 3);
+      if (r === 0) {
+        this.stateMachine.setState("run-left");
+      } else if (r === 1) {
         this.stateMachine.setState("run-down");
-      } else if (r > 33 && r <= 66) {
+      } else if (r === 2) {
         this.stateMachine.setState("run-right");
-      } else if (r > 100) {
-        this.stateMachine.setState("run-up");
       }
     }
     if (this.knightDistance() < this.triggerDistance) {
@@ -214,14 +215,14 @@ export default class ShadowController {
     this.sprite.play("shadow-run-side", true);
     this.sprite.setVelocity(this.speed, 0);
     this.sprite.flipX = true;
-    if (this.moveTime > Math.floor(Math.random() * 5000 + 5000)) {
-      const r = Phaser.Math.Between(1, 100);
-      if (r <= 33) {
-        this.stateMachine.setState("run-up");
-      } else if (r > 33 && r <= 66) {
+    if (this.moveTime > Math.floor(Math.random() * 3000 + 3000)) {
+      const r = Math.floor(Math.random() * 3);
+      if (r === 0) {
         this.stateMachine.setState("run-left");
-      } else if (r > 100) {
+      } else if (r === 1) {
         this.stateMachine.setState("run-down");
+      } else if (r === 2) {
+        this.stateMachine.setState("run-right");
       }
     }
     if (this.knightDistance() < this.triggerDistance) {

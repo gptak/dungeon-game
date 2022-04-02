@@ -96,18 +96,18 @@ export default class SlimeController {
   }
 
   private idleEnter() {
-    const r = Phaser.Math.Between(1, 100);
+    const r = Math.floor(Math.random() * 4);
     this.sprite.tint = 0xffffff;
-    if (r <= 25) {
+    if (r === 0) {
       this.stateMachine.setState("run-right");
-    } else if (r > 25 && r <= 50) {
+    } else if (r === 1) {
       this.stateMachine.setState("run-up");
-    } else if (r > 50 && r <= 75) {
+    } else if (r === 2) {
       this.stateMachine.setState("run-left");
-    } else if (r > 75) {
+    } else if (r === 3) {
       this.stateMachine.setState("run-down");
     }
-   }
+  }
 
   private runEnter() {
     this.moveTime = 0;
@@ -117,13 +117,13 @@ export default class SlimeController {
     this.moveTime += dt;
     this.sprite.play("slime-run-up", true);
     this.sprite.setVelocity(0, -this.speed);
-    if (this.moveTime > Math.floor(Math.random() * 5000 + 5000)) {
-      const r = Phaser.Math.Between(1, 100);
-      if (r <= 33) {
+    if (this.moveTime > Math.floor(Math.random() * 2000 + 2000)) {
+      const r = Math.floor(Math.random() * 3);
+      if (r === 0) {
         this.stateMachine.setState("run-left");
-      } else if (r > 33 && r <= 66) {
+      } else if (r === 1) {
         this.stateMachine.setState("run-down");
-      } else if (r > 100) {
+      } else if (r === 2) {
         this.stateMachine.setState("run-right");
       }
     }
@@ -134,14 +134,14 @@ export default class SlimeController {
     this.sprite.play("slime-run-down", true);
     this.sprite.setVelocity(0, this.speed);
 
-    if (this.moveTime > Math.floor(Math.random() * 5000 + 5000)) {
-      const r = Phaser.Math.Between(1, 100);
-      if (r <= 33) {
-        this.stateMachine.setState("run-right");
-      } else if (r > 33 && r <= 66) {
-        this.stateMachine.setState("run-up");
-      } else if (r > 100) {
+    if (this.moveTime > Math.floor(Math.random() * 2000 + 2000)) {
+      const r = Math.floor(Math.random() * 3);
+      if (r === 0) {
         this.stateMachine.setState("run-left");
+      } else if (r === 1) {
+        this.stateMachine.setState("run-down");
+      } else if (r === 2) {
+        this.stateMachine.setState("run-right");
       }
     }
   }
@@ -151,14 +151,14 @@ export default class SlimeController {
     this.sprite.play("slime-run-side", true);
     this.sprite.setVelocity(-this.speed, 0);
     this.sprite.flipX = true;
-    if (this.moveTime > Math.floor(Math.random() * 5000 + 5000)) {
-      const r = Phaser.Math.Between(1, 100);
-      if (r <= 33) {
+    if (this.moveTime > Math.floor(Math.random() * 2000 + 2000)) {
+      const r = Math.floor(Math.random() * 3);
+      if (r === 0) {
+        this.stateMachine.setState("run-left");
+      } else if (r === 1) {
         this.stateMachine.setState("run-down");
-      } else if (r > 33 && r <= 66) {
+      } else if (r === 2) {
         this.stateMachine.setState("run-right");
-      } else if (r > 100) {
-        this.stateMachine.setState("run-up");
       }
     }
   }
@@ -168,14 +168,14 @@ export default class SlimeController {
     this.sprite.play("slime-run-side", true);
     this.sprite.setVelocity(this.speed, 0);
     this.sprite.flipX = false;
-    if (this.moveTime > Math.floor(Math.random() * 7000 + 3000)) {
-      const r = Phaser.Math.Between(1, 100);
-      if (r <= 33) {
-        this.stateMachine.setState("run-up");
-      } else if (r > 33 && r <= 66) {
+    if (this.moveTime > Math.floor(Math.random() * 2000 + 2000)) {
+      const r = Math.floor(Math.random() * 3);
+      if (r === 0) {
         this.stateMachine.setState("run-left");
-      } else if (r > 100) {
+      } else if (r === 1) {
         this.stateMachine.setState("run-down");
+      } else if (r === 2) {
+        this.stateMachine.setState("run-right");
       }
     }
   }
