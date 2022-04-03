@@ -21,12 +21,7 @@ export default class Level1 extends Phaser.Scene {
     this.cursors = this.input.keyboard.createCursorKeys();
     this.slimeControllers = [];
     this.slimes = [];
-    this.events.once(Phaser.Scenes.Events.SHUTDOWN, () => {
-      this.destroy();
-    });
   }
-
-  destroy() {}
 
   create() {
     //map
@@ -124,6 +119,7 @@ export default class Level1 extends Phaser.Scene {
 
         case "door-1->2":
           this.door = this.physics.add.sprite(x, y, "door");
+          this.door.visible = false;
           this.physics.add.collider(
             this.knight,
             this.door,

@@ -20,13 +20,7 @@ export default class Level2 extends Phaser.Scene {
     this.cursors = this.input.keyboard.createCursorKeys();
     this.shadowsControllers = [];
     this.shadows = [];
-
-    this.events.once(Phaser.Scenes.Events.SHUTDOWN, () => {
-      this.destroy();
-    });
   }
-
-  destroy() {}
 
   create() {
     this.scene.moveBelow("ui");
