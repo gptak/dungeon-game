@@ -106,7 +106,7 @@ export default class Preloader extends Phaser.Scene {
       "assets/shadow/shadow_attack_side.json"
     );
     this.load.atlas(
-      "shadow_run_down",
+      "shadow_attack_down",
       "assets/shadow/shadow_attack_down.png",
       "assets/shadow/shadow_attack_down.json"
     );
@@ -121,7 +121,7 @@ export default class Preloader extends Phaser.Scene {
   }
 
   create() {
-    this.scene.start("level2");
+    this.scene.start("level1");
     this.scene.launch("ui")
   }
 }

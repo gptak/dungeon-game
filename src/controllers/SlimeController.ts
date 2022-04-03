@@ -3,7 +3,6 @@ import StateMachine from "../statemachine/StateMachine";
 import { sceneEvents } from "~/events center/EventsCenter";
 
 export default class SlimeController {
-  private scene: Phaser.Scene;
   private stateMachine: StateMachine;
   private sprite: Phaser.Physics.Arcade.Sprite;
 
@@ -14,10 +13,8 @@ export default class SlimeController {
   private gold = Math.floor(Math.random() * 4 + 1);
   private exp = 100;
 
-  constructor(scene: Phaser.Scene, sprite: Phaser.Physics.Arcade.Sprite) {
-    this.scene = scene;
+  constructor(sprite: Phaser.Physics.Arcade.Sprite) {
     this.sprite = sprite;
-
     this.sprite.setBodySize(this.sprite.width * 0.4, this.sprite.height * 0.4);
 
     this.createAnimation();

@@ -26,7 +26,6 @@ export default class Level1 extends Phaser.Scene {
     });
   }
 
-
   destroy() {}
 
   create() {
@@ -95,7 +94,7 @@ export default class Level1 extends Phaser.Scene {
         case "slime-spawn":
           const slime = this.physics.add.sprite(x, y, "slime");
           this.slimes?.push(slime);
-          this.slimeControllers.push(new SlimeController(this, slime));
+          this.slimeControllers.push(new SlimeController(slime));
 
           //slime coliders
           this.physics.add.collider(

@@ -96,7 +96,7 @@ export default class Level2 extends Phaser.Scene {
           const shadow = this.physics.add.sprite(x, y, "shadow");
           this.shadows?.push(shadow);
           this.shadowsControllers.push(
-            new ShadowController(this, shadow, this.knight)
+            new ShadowController(shadow, this.knight)
           );
 
           //slime coliders

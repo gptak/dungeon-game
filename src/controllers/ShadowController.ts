@@ -3,25 +3,22 @@ import StateMachine from "../statemachine/StateMachine";
 import { sceneEvents } from "~/events center/EventsCenter";
 
 export default class ShadowController {
-  private scene: Phaser.Scene;
   private stateMachine: StateMachine;
   private sprite: Phaser.Physics.Arcade.Sprite;
   private knight: Phaser.Physics.Arcade.Sprite;
 
   //shadow stats
   private moveTime = 0;
-  private speed = 40;
+  private speed = 45;
   private triggerDistance = 70;
-  private hitPoints = 50;
+  private hitPoints = 10;
   private gold = Math.floor(Math.random() * 7 + 3);
   private exp = 100;
 
   constructor(
-    scene: Phaser.Scene,
     sprite: Phaser.Physics.Arcade.Sprite,
     knight: Phaser.Physics.Arcade.Sprite
   ) {
-    this.scene = scene;
     this.sprite = sprite;
     this.knight = knight;
 
@@ -55,8 +52,20 @@ export default class ShadowController {
         onEnter: this.runEnter,
         onUpdate: this.runRightUpdate,
       })
-      .addState("attack", {
-        onEnter: this.attackEnter,
+      .addState("attack-up", {
+        onEnter: this.attackUpEnter,
+        onUpdate: this.attackUpdate,
+      })
+      .addState("attack-left", {
+        onEnter: this.attackLeftEnter,
+        onUpdate: this.attackUpdate,
+      })
+      .addState("attack-right", {
+        onEnter: this.attackRightEnter,
+        onUpdate: this.attackUpdate,
+      })
+      .addState("attack-down", {
+        onEnter: this.attackDownEnter,
         onUpdate: this.attackUpdate,
       })
       .addState("hit", {
@@ -133,20 +142,6 @@ export default class ShadowController {
     }
   }
 
-  private attackEnter() {
-    console.log("teraz");
-    this.sprite.setVelocity(
-      (this.knight.x - this.sprite.x) ,
-      (this.knight.y - this.sprite.y)
-    );
-  }
-
-  private attackUpdate() {
-    if (this.knightDistance() > this.triggerDistance) {
-      this.stateMachine.setState("idle");
-    }
-  }
-
   private runEnter() {
     this.moveTime = 0;
   }
@@ -165,8 +160,25 @@ export default class ShadowController {
         this.stateMachine.setState("run-right");
       }
     }
+    const dx = this.knight.x - this.sprite.x;
+    const dy = this.knight.y - this.sprite.y;
     if (this.knightDistance() < this.triggerDistance) {
-      this.stateMachine.setState("attack");
+      if (dy < 0 && Math.abs(dy) > Math.abs(dx)) {
+        this.stateMachine.setState("attack-up");
+        return;
+      }
+      if (dy > 0 && Math.abs(dy) > Math.abs(dx)) {
+        this.stateMachine.setState("attack-down");
+        return;
+      }
+      if (dx < 0 && Math.abs(dy) < Math.abs(dx)) {
+        this.stateMachine.setState("attack-left");
+        return;
+      }
+      if (dx > 0 && Math.abs(dy) < Math.abs(dx)) {
+        this.stateMachine.setState("attack-right");
+        return;
+      }
     }
   }
 
@@ -185,8 +197,25 @@ export default class ShadowController {
         this.stateMachine.setState("run-right");
       }
     }
+    const dx = this.knight.x - this.sprite.x;
+    const dy = this.knight.y - this.sprite.y;
     if (this.knightDistance() < this.triggerDistance) {
-      this.stateMachine.setState("attack");
+      if (dy < 0 && Math.abs(dy) > Math.abs(dx)) {
+        this.stateMachine.setState("attack-up");
+        return;
+      }
+      if (dy > 0 && Math.abs(dy) > Math.abs(dx)) {
+        this.stateMachine.setState("attack-down");
+        return;
+      }
+      if (dx < 0 && Math.abs(dy) < Math.abs(dx)) {
+        this.stateMachine.setState("attack-left");
+        return;
+      }
+      if (dx > 0 && Math.abs(dy) < Math.abs(dx)) {
+        this.stateMachine.setState("attack-right");
+        return;
+      }
     }
   }
 
@@ -205,8 +234,25 @@ export default class ShadowController {
         this.stateMachine.setState("run-right");
       }
     }
+    const dx = this.knight.x - this.sprite.x;
+    const dy = this.knight.y - this.sprite.y;
     if (this.knightDistance() < this.triggerDistance) {
-      this.stateMachine.setState("attack");
+      if (dy < 0 && Math.abs(dy) > Math.abs(dx)) {
+        this.stateMachine.setState("attack-up");
+        return;
+      }
+      if (dy > 0 && Math.abs(dy) > Math.abs(dx)) {
+        this.stateMachine.setState("attack-down");
+        return;
+      }
+      if (dx < 0 && Math.abs(dy) < Math.abs(dx)) {
+        this.stateMachine.setState("attack-left");
+        return;
+      }
+      if (dx > 0 && Math.abs(dy) < Math.abs(dx)) {
+        this.stateMachine.setState("attack-right");
+        return;
+      }
     }
   }
 
@@ -225,8 +271,65 @@ export default class ShadowController {
         this.stateMachine.setState("run-right");
       }
     }
+    const dx = this.knight.x - this.sprite.x;
+    const dy = this.knight.y - this.sprite.y;
     if (this.knightDistance() < this.triggerDistance) {
-      this.stateMachine.setState("attack");
+      if (dy < 0 && Math.abs(dy) > Math.abs(dx)) {
+        this.stateMachine.setState("attack-up");
+        return;
+      }
+      if (dy > 0 && Math.abs(dy) > Math.abs(dx)) {
+        this.stateMachine.setState("attack-down");
+        return;
+      }
+      if (dx < 0 && Math.abs(dy) < Math.abs(dx)) {
+        this.stateMachine.setState("attack-left");
+        return;
+      }
+      if (dx > 0 && Math.abs(dy) < Math.abs(dx)) {
+        this.stateMachine.setState("attack-right");
+        return;
+      }
+    }
+  }
+
+  private attackUpEnter() {
+    this.sprite.play("shadow-attack-up", true);
+    this.sprite.setVelocity(
+      (this.knight.x - this.sprite.x) * 1.2,
+      (this.knight.y - this.sprite.y) * 1.2
+    );
+  }
+
+  private attackLeftEnter() {
+    this.sprite.play("shadow-attack-side", true);
+    this.sprite.setVelocity(
+      (this.knight.x - this.sprite.x) * 1.2,
+      (this.knight.y - this.sprite.y) * 1.2
+    );
+    this.sprite.flipX = false;
+  }
+
+  private attackRightEnter() {
+    this.sprite.play("shadow-attack-side", true);
+    this.sprite.setVelocity(
+      (this.knight.x - this.sprite.x) * 1.2,
+      (this.knight.y - this.sprite.y) * 1.2
+    );
+    this.sprite.flipX = true;
+  }
+
+  private attackDownEnter() {
+    this.sprite.play("shadow-attack-down", true);
+    this.sprite.setVelocity(
+      (this.knight.x - this.sprite.x) * 1.2,
+      (this.knight.y - this.sprite.y) * 1.2
+    );
+  }
+
+  private attackUpdate() {
+    if (this.knightDistance() > this.triggerDistance) {
+      this.stateMachine.setState("idle");
     }
   }
 
@@ -262,6 +365,39 @@ export default class ShadowController {
         suffix: ".png",
       }),
       frameRate: 8,
+      repeat: -1,
+    });
+    this.sprite.anims.create({
+      key: "shadow-attack-up",
+      frames: this.sprite.anims.generateFrameNames("shadow_attack_up", {
+        start: 2,
+        end: 4,
+        prefix: "1",
+        suffix: ".png",
+      }),
+      frameRate: 15,
+      repeat: -1,
+    });
+    this.sprite.anims.create({
+      key: "shadow-attack-down",
+      frames: this.sprite.anims.generateFrameNames("shadow_attack_down", {
+        start: 1,
+        end: 3,
+        prefix: "10",
+        suffix: ".png",
+      }),
+      frameRate: 15,
+      repeat: -1,
+    });
+    this.sprite.anims.create({
+      key: "shadow-attack-side",
+      frames: this.sprite.anims.generateFrameNames("shadow_attack_side", {
+        start: 5,
+        end: 7,
+        prefix: "1",
+        suffix: ".png",
+      }),
+      frameRate: 15,
       repeat: -1,
     });
     this.sprite.anims.create({
