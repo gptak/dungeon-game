@@ -122,6 +122,6 @@ export default class Preloader extends Phaser.Scene {
 
   create() {
     this.scene.start("level1");
-    this.scene.launch("ui")
+    this.scene.launch("ui");
   }
 }

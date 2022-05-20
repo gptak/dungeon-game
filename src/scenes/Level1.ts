@@ -30,6 +30,16 @@ export default class Level1 extends Phaser.Scene {
     const wallsLayerFront = map.createLayer("WallsFront", tileset, 0, 0);
     map.createLayer("Floor", tileset, 0, 0);
     const wallsLayer = map.createLayer("Walls", tileset, 0, 0);
+    this.add.text(665, 1458, "use the ARROWS to move around", {
+      fontSize: "10px",
+      color: "#fff",
+      strokeThickness: 0,
+    });
+    this.add.text(710, 1202, "SPACE to attack", {
+      fontSize: "10px",
+      color: "#fff",
+      strokeThickness: 0,
+    });
 
     wallsLayer.setCollisionByProperty({ collide: true });
     wallsLayerFront.setCollisionByProperty({ collide: true });
@@ -124,8 +134,12 @@ export default class Level1 extends Phaser.Scene {
             this.knight,
             this.door,
             () => {
-              this.scene.start("level2");
-              sceneEvents.emit("knight-door-passing");
+              this.scene.scene.cameras.main.fadeOut(1000, 0, 0, 0, () => {
+                this.scene.scene.time.delayedCall(1800, () => {
+                  this.scene.start("level2");
+                  sceneEvents.emit("knight-door-passing");
+                });
+              });
             },
             undefined,
             this
@@ -175,5 +189,6 @@ export default class Level1 extends Phaser.Scene {
     this.slimeControllers.forEach((slimeController) =>
       slimeController.update(dt)
     );
+    console.log(this.knight.x, this.knight.y);
   }
 }
