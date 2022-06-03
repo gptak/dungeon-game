@@ -8,8 +8,12 @@ import Level2 from "./scenes/Level2";
 
 const config: Phaser.Types.Core.GameConfig = {
   type: Phaser.AUTO,
-  width: 400,
-  height: 300,
+  scale: {
+    parent: "game-container",
+    width: 400,
+    height: 300,
+    zoom: 2,
+  },
   physics: {
     default: "arcade",
     arcade: {
@@ -18,9 +22,6 @@ const config: Phaser.Types.Core.GameConfig = {
     },
   },
   scene: [Preloader, Level1, UI, GameOver, Level2],
-  scale: {
-    zoom: 2,
-  },
 };
 
 export default new Phaser.Game(config);

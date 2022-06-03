@@ -189,6 +189,5 @@ export default class Level1 extends Phaser.Scene {
     this.slimeControllers.forEach((slimeController) =>
       slimeController.update(dt)
     );
-    console.log(this.knight.x, this.knight.y);
   }
 }

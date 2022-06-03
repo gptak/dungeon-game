@@ -67,10 +67,8 @@ export default class UI extends Phaser.Scene {
   //events handlers
   private handleKnightHitPoints(dir: Phaser.Math.Vector2, dmg: number) {
     this.hitPoints = this.hitPoints - dmg;
-    console.log(this.hitPoints);
 
     this.hearts.children.each((image, index) => {
-      console.log("sprawdzam");
       const heart = image as Phaser.GameObjects.Image;
       if (index < this.hitPoints) {
         heart.setTexture("ui_heart_full");
